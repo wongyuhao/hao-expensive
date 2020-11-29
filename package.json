@@ -23,7 +23,8 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mongoose": "^5.10.17"
+    "mongoose": "^5.10.17",
+    "react-hook-form": "^6.12.1"
   },
   "devDependencies": {
     "concurrently": "^5.3.0",
