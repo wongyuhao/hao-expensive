@@ -1,0 +1,31 @@
+{
+  "name": "hao-expensive",
+  "version": "1.0.0",
+  "description": "Expense tracker backend",
+  "main": "server.js",
+  "scripts": {
+    "start" : "node server",
+    "server" : "nodemon server" ,
+    "client" : "npm start --prefix client",
+    "dev" : "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wongyuhao/hao-expensive.git"
+  },
+  "author": "Yu Hao Wong",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wongyuhao/hao-expensive/issues"
+  },
+  "homepage": "https://github.com/wongyuhao/hao-expensive#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.17"
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.6"
+  }
+}
