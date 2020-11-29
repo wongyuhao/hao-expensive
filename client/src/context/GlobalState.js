@@ -25,6 +25,8 @@ export const GlobalProvider = ({ children }) => {
         type: 'GET_TRANSACTIONS',
         payload: res.data.data
       });
+
+      
     } catch (err) {
       dispatch({
         type: 'TRANSACTION_ERROR',

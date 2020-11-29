@@ -5,6 +5,7 @@ export const AddTransaction = () => {
   const [text, setText] = useState('');
   const [amount, setAmount] = useState(0);
   const [currency, setCurrency] = useState("MYR");
+  const [bank, setBank] = useState("");
 
   const { addTransaction } = useContext(GlobalContext);
 
@@ -14,7 +15,8 @@ export const AddTransaction = () => {
     const newTransaction = {
       text,
       amount: +amount,
-      currency
+      currency, 
+      bank
     }
 
     addTransaction(newTransaction);
@@ -42,6 +44,13 @@ export const AddTransaction = () => {
           <label htmlFor="currency">MYR</label>
           <input type="radio" name="currency" onChange={() => setCurrency("USD")}/>
           <label htmlFor="currency">USD</label>
+        </div>
+        <div>
+        <label for="bank">Bank:</label>
+        <select name="bank" onChange = {(e) => setBank(e.target.value) }>
+         <option value="cimb">CIMB</option>
+         <option value="maybank">Maybank</option>
+        </select>
         </div>
         <button className="btn">Add transaction</button>
       </form>
