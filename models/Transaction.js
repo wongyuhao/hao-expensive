@@ -12,11 +12,22 @@ const TransactionSchema = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
+    required: true, 
     default: Date.now
   },
   currency:{ 
     type: String, 
-    enum: ['USD', 'MYR'] 
+    enum: ['USD', 'MYR'],
+    required: true
+  }, 
+  source:{
+    type: String,
+    enum: ['CIMB', 'MAYBANK', 'OTHER'],
+    required: true,
+    default: "other"
+  },
+  remarks:{
+    type:String
   }
   
   

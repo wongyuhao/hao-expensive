@@ -1,50 +1,48 @@
 import React, {useState, useContext} from 'react'
 import { GlobalContext } from '../context/GlobalState';
+import { useForm } from 'react-hook-form';
 
 export const AddTransaction = () => {
-  const [text, setText] = useState('');
-  const [amount, setAmount] = useState(0);
-  const [currency, setCurrency] = useState("MYR");
+  
 
   const { addTransaction } = useContext(GlobalContext);
+  const { register, handleSubmit, errors } = useForm();
+  
+  const onSubmit = ({text, amount, currency, source, remarks, date}) => {
+    
 
-  const onSubmit = e => {
-    e.preventDefault();
-
-    const newTransaction = {
-      text,
+    const transaction = {
+      text, 
       amount: +amount,
-      currency
+      date,
+      currency,
+      source, 
+      remarks, 
     }
 
-    addTransaction(newTransaction);
-  }
+    addTransaction(transaction);
+  };
 
   return (
-    <>
-      <h3>Add new transaction</h3>
-      <form onSubmit={onSubmit}>
-        <div className="form-control">
-          <label htmlFor="text">Text</label>
-          <input type="text" value={text} onChange={(e) => setText(e.target.value)} placeholder="Enter text..." />
-        </div>
-        <div className="form-control">
-          <label htmlFor="amount"
-            >Amount <br />
-            (negative - expense, positive - income)</label
-          >
-          <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="Enter amount..." />
-        </div>
-        <div>
-          <label htmlFor="currency">Currency: </label>
-     
-          <input type="radio" name="currency" onChange={() => setCurrency("MYR")}/>
-          <label htmlFor="currency">MYR</label>
-          <input type="radio" name="currency" onChange={() => setCurrency("USD")}/>
-          <label htmlFor="currency">USD</label>
-        </div>
-        <button className="btn">Add transaction</button>
-      </form>
-    </>
+
+  
+  
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input type="text" placeholder="Title" name="text" ref={register({required: true})} />
+      <input type="number" placeholder="Amount" name="amount" ref={register} />
+
+      <input name="currency" type="radio" value="MYR" ref={register({ required: true })}/>
+      <input name="currency" type="radio" value="USD" ref={register({ required: true })}/>
+      <select name="source" ref={register({ required: true })}>
+        <option value="CIMB">CIMB</option>
+        <option value="MAYBANK">MAYBANK</option>
+        <option value="OTHERS">OTHERS</option>
+      </select>
+      <input type="text" placeholder="Remarks" name="remarks" ref={register} />
+      <input type="date" placeholder="Date" name="date" ref={register({required: true})} />
+
+      <input type="submit" />
+    </form>
+
   )
 }
