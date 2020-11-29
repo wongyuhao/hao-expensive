@@ -16,13 +16,7 @@ const TransactionSchema = new mongoose.Schema({
   },
   currency:{ 
     type: String, 
-    enum: ['USD', 'MYR'],
-    required:true
-  },
-  bank: {
-    type: String,
-    enum:['cimb' , 'maybank', ''],
-    required:true
+    enum: ['USD', 'MYR'] 
   }
   
   
