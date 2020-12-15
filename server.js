@@ -1,9 +1,13 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const passportLocalMongoose = require('passport-local-mongoose');
 const path = require('path');
-
-const transactions = require('./routes/transactions.js')
+const transactions = require('./routes/transactions.js');
+const users = require('./routes/users.js');
 dotenv.config({path: './config/config.env'});
 
 connectDB();
@@ -11,7 +15,12 @@ connectDB();
 const app = express();
 
 app.use(express.json());
+
+app.use('/api/v1/users', users);
 app.use('/api/v1/transactions', transactions);
+
+
+
 
 if(process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));

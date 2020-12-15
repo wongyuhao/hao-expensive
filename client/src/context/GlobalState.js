@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useState} from 'react';
 import AppReducer from './AppReducer';
 import axios from 'axios';
 
@@ -6,7 +6,9 @@ import axios from 'axios';
 const initialState = {
   transactions: [],
   error: null,
-  loading: true
+  loading: true, 
+  
+  
 }
 
 // Create context
@@ -15,16 +17,24 @@ export const GlobalContext = createContext(initialState);
 // Provider component
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
-
+  const [userData, setUserData] = useState({
+    token: undefined,
+    user: undefined
+  })
   // Actions
   async function getTransactions() {
+    
     try {
-      const res = await axios.get('/api/v1/transactions');
-
-      dispatch({
-        type: 'GET_TRANSACTIONS',
-        payload: res.data.data
-      });
+      if(userData.user !== undefined){
+        const res = await axios.get(`/api/v1/transactions/${userData.user.id}`);
+        console.log('get')
+        console.log(res.data.data.transactions);
+       dispatch({
+          type: 'GET_TRANSACTIONS',
+          payload: res.data.data.transactions
+       });
+      }
+      
     } catch (err) {
       dispatch({
         type: 'TRANSACTION_ERROR',
@@ -32,6 +42,8 @@ export const GlobalProvider = ({ children }) => {
       });
     }
   }
+
+
 
   async function deleteTransaction(id) {
     try {
@@ -41,6 +53,7 @@ export const GlobalProvider = ({ children }) => {
         type: 'DELETE_TRANSACTION',
         payload: id
       });
+
     } catch (err) {
       dispatch({
         type: 'TRANSACTION_ERROR',
@@ -55,14 +68,16 @@ export const GlobalProvider = ({ children }) => {
         'Content-Type': 'application/json'
       }
     }
-
     try {
-      const res = await axios.post('/api/v1/transactions', transaction, config);
-
-      dispatch({
-        type: 'ADD_TRANSACTION',
-        payload: res.data.data
-      });
+      if(userData.user !== undefined){
+       const res = await axios.post(`/api/v1/transactions/${userData.user.id}`, transaction, config);
+       console.log('add res'); 
+       console.log(res)
+       dispatch({
+         type: 'ADD_TRANSACTION',
+         payload: res.data.data.transaction
+        });
+      }
     } catch (err) {
       dispatch({
         type: 'TRANSACTION_ERROR',
@@ -71,13 +86,24 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
+  const clearLocalTransactions = ()=>{
+    dispatch({
+      type: 'CLEAR_LOCAL'
+    });
+  }
+
   return (<GlobalContext.Provider value={{
     transactions: state.transactions,
     error: state.error,
     loading: state.loading,
     getTransactions,
     deleteTransaction,
-    addTransaction
+    addTransaction, 
+    clearLocalTransactions,
+    userData,
+    setUserData,
+    user: userData.user
+   
   }}>
     {children}
   </GlobalContext.Provider>);

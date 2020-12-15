@@ -1,25 +1,40 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect} from 'react';
 import { Transaction } from './Transaction';
 
 import { GlobalContext } from '../context/GlobalState';
 
+
+
 export const TransactionList = () => {
-  const { transactions, getTransactions, loading } = useContext(GlobalContext);
-  let temp = <></>;
-  useEffect(() => {
-    getTransactions();
+  const { transactions, getTransactions, user} = useContext(GlobalContext);
+  
+ 
 
-    console.log(loading);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  useEffect(()=>{
+    if(user === undefined) return;
+    getTransactions().catch((err)=>console.log(err));
+  }, [user]);
+  
+  if(user === undefined) {
+    return (
+      <>
+        <h3>History</h3>
+        
+        <em>Loading...</em>
+      </>
+    )
+  }else{
+    
+    return (
+      <>
+        <h3>History</h3>
+        
+        <ul className="list">
+          {transactions.map(transaction => (<Transaction key={transaction._id} transaction={transaction} />))}
+        </ul>
+      </>
+    )
+  }
 
-  return (
-    <>
-      <h3>History</h3>
-      
-      <ul className="list">
-        {transactions.map(transaction => (<Transaction key={transaction._id} transaction={transaction} />))}
-      </ul>
-    </>
-  )
+  
 }
