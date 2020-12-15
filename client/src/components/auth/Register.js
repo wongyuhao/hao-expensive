@@ -1,28 +1,28 @@
-import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useContext, useEffect, useRef } from "react";
+import { useHistory, Redirect} from "react-router-dom";
+import {useForm} from 'react-hook-form'
 import {GlobalContext} from "../../context/GlobalState";
 import Axios from "axios";
 import ErrorNotice from "../misc/ErrorNotice";
+import { ErrorMessage } from '@hookform/error-message';
 
 export default function Register() {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [passwordCheck, setPasswordCheck] = useState();
-  const [displayName, setDisplayName] = useState();
+  const { register, handleSubmit, errors, watch } = useForm();
   const [error, setError] = useState();
-
-  const { setUserData } = useContext(GlobalContext);
+  const { user, setUserData } = useContext(GlobalContext);
   const history = useHistory();
+  let isRendered = true;
+  const password = useRef({});
+  password.current = watch("password", "");
 
-  const submit = async (e) => {
-    e.preventDefault();
-
+  const onSubmit = async (data) => {
+   
+   if(isRendered){
     try {
-      const newUser = { email, password, passwordCheck, displayName };
-      await Axios.post("/api/v1/users/register", newUser);
+      await Axios.post("/api/v1/users/register", data);
       const loginRes = await Axios.post("/api/v1/users/login", {
-        email,
-        password,
+        email: data.email,
+        password: data.password,
       });
 
       
@@ -35,43 +35,43 @@ export default function Register() {
     } catch (err) {
       err.response.data.error && setError(err.response.data.error);
     }
+  }
   };
 
+  //do not update state once component is unmounted
+  useEffect(() => {
+    return () => { isRendered = false }; // use effect cleanup to set flag false, if unmounted
+  });
+
+  if(user) {
+    return <Redirect to={'/'}/>
+  }
+
+  
+  
+  
   return (
     <div className="page">
-      <h2>Register</h2>
+      <p className='font-black text-2xl my-10 text-white text-opacity-90' >Register a new profile.</p>
       {error && (
         <ErrorNotice message={error} clearError={() => setError(undefined)} />
       )}
-      <form className="form" onSubmit={submit}>
-        <label htmlFor="register-email">Email</label>
-        <input
-          id="register-email"
-          type="email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
+      <form  className='form self-align-center' onSubmit={handleSubmit(onSubmit)}>
+        <input className='form-input' type="text" placeholder="Username" name="username" ref={register} />
+        <input className='form-input' type="email" placeholder="E-mail" name="email" ref={register({required: 'This field is required'})} />
+        <ErrorMessage name='email' errors={errors}/>
+        <input className='form-input' type="password" placeholder="Password" name="password" ref={register({required: 'This field is required', minLength: {
+            value: 5,
+            message: "Must exceed 5 characters"
+          }})} />
+        <ErrorMessage name='password' errors={errors}/>
+        <input className='form-input' type="password" placeholder="Retype Password" name="passwordCheck" ref={register({required: true, validate: value =>
+            value === password.current || "Passwords must match"})} />
+        <ErrorMessage name='passwordCheck' errors={errors}/>
 
-        <label htmlFor="register-password">Password</label>
-        <input
-          id="register-password"
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Verify password"
-          onChange={(e) => setPasswordCheck(e.target.value)}
-        />
-
-        <label htmlFor="register-display-name">Display name</label>
-        <input
-          id="register-display-name"
-          type="text"
-          onChange={(e) => setDisplayName(e.target.value)}
-        />
-
-        <input type="submit" value="Register" />
-      </form>
+        <input className='form-submit' type="submit" value='Register'/>
+    </form>
+      
     </div>
   );
 }

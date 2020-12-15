@@ -22,11 +22,11 @@ export default function AuthOptions() {
   return (
     <div className="auth-options">
       {user ? (
-        <button onClick={logout}>Log out</button>
+        <button onClick={logout} className='btn text-yellow-400'>Log out</button>
       ) : (
         <>
-          <button onClick={register}>Register</button>
-          <button onClick={login}>Log in</button>
+          <button onClick={register} className='btn'>Register</button>
+          <button onClick={login} className='btn'>Log in</button>
         </>
       )}
     </div>

@@ -1,21 +1,21 @@
-import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { useHistory , Redirect} from "react-router-dom";
 import { GlobalContext } from '../../context/GlobalState';
+import {useForm} from 'react-hook-form'
+import { ErrorMessage } from '@hookform/error-message';
 import Axios from "axios";
 import ErrorNotice from "../misc/ErrorNotice";
 
 export default function Login() {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const { register, handleSubmit, errors } = useForm();
   const [error, setError] = useState();
-
-  const { setUserData } = useContext(GlobalContext);
+  const { user, setUserData } = useContext(GlobalContext);
   const history = useHistory();
-
-  const submit = async (e) => {
-    e.preventDefault();
+  let isRendered = true
+  const onSubmit = async (data) => {
+    if(isRendered){
     try {
-      const loginUser = { email, password };
+      const loginUser = data;
       const loginRes = await Axios.post(
         "/api/v1/users/login",
         loginUser
@@ -29,30 +29,36 @@ export default function Login() {
     } catch (err) {
       err.response.data.error && setError(err.response.data.error);
     }
+  }
   };
+
+  //do not update state once component is unmounted
+  useEffect(() => {
+    return () => { isRendered = false }; // use effect cleanup to set flag false, if unmounted
+  });
+
+  if(user) {
+    return <Redirect to={'/'}/>
+  }
+
   return (
     <div className="page">
-      <h2>Log in</h2>
+      <p className='font-black text-2xl my-10 text-white text-opacity-90' >Welcome back.</p>
       {error && (
         <ErrorNotice message={error} clearError={() => setError(undefined)} />
       )}
-      <form className="form" onSubmit={submit}>
-        <label htmlFor="login-email">Email</label>
-        <input
-          id="login-email"
-          type="email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
+      <form  className='form self-align-center' onSubmit={handleSubmit(onSubmit)}>
+        <input className='form-input' type="email" placeholder="E-mail" name="email" ref={register({required: 'This field is required'})} />
+        <ErrorMessage name='email' errors={errors}/>
+        <input className='form-input' type="password" placeholder="Password" name="password" ref={register({required: 'This field is required', minLength: {
+            value: 5,
+            message: "Must exceed 5 characters"
+          }})} />
+        <ErrorMessage name='password' errors={errors}/>
+        
 
-        <label htmlFor="login-password">Password</label>
-        <input
-          id="login-password"
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-
-        <input type="submit" value="Log in" />
-      </form>
+        <input className='form-submit' type="submit" value='Log In'/>
+    </form>
     </div>
   );
 }
