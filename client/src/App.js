@@ -1,14 +1,14 @@
-import React, {useEffect, useContext} from 'react';
+import React, {useEffect, useContext, useState} from 'react';
 import Home from './pages/Home'
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 import Header from './components/Header'
 import {  GlobalContext } from './context/GlobalState';
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import {BrowserRouter, Switch, Route, useLocation} from 'react-router-dom';
 import Axios from 'axios';
 export default () => {
   const {setUserData} = useContext(GlobalContext);
-
+  const [path, setPath] = useState('/');
   const checkLogin = async () => {  
     let token = localStorage.getItem('auth-token');
     if (token === null) {
@@ -41,16 +41,18 @@ export default () => {
 
   }
   useEffect(()=>{
+    
     try {
       checkLogin();
+      
     } catch (err) {
       console.error(err.message);
     }
-  },[])
+  },[useLocation])
   return (
-    <div class='flex flex-col'>
+    <div className='flex flex-col'>
       <BrowserRouter>
-      <Header />
+      <Header  />
       <Switch>
         <Route exact path="/" component ={Home}/>
         <Route exact path="/login" component ={Login}/>

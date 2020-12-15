@@ -2,4 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base{
+  body{
+    @apply bg-black text-white;
+  }
+}
 
+@layer components {
+  .btn {
+    @apply bg-opacity-25 bg-white px-3 py-1.5 mx-1 my-0.5 rounded
+  }
+
+  .page{
+    @apply flex flex-col items-center justify-center 
+  }
+
+  .form{
+   @apply flex flex-col bg-gray-800 p-4 rounded-md
+  }
+
+  .form-input{
+    @apply p-3 rounded mt-1.5 mb-2 bg-gray-600 w-72
+  }
+
+  .form-submit{
+    @apply p-3 rounded bg-yellow-500 text-white mt-7 hover:bg-yellow-600 cursor-pointer
+  }
+}
