@@ -1,8 +1,8 @@
-const Transaction = require('../models/Transaction');
+const {Transaction} = require('../models/Transaction');
+const {User} = require('../models/User');
 
 
-
-exports.getTransactions = async (req, res, next) => {
+exports.getAllTransactions = async (req, res, next) => {
   try {
     const transactions = await Transaction.find();
     return res.status(200).json({
@@ -18,15 +18,57 @@ exports.getTransactions = async (req, res, next) => {
   }
 }
 
-exports.addTransactions = async (req, res, next) => {
+exports.getUserTransactions = async (req, res, next) => {
   try {
-    const {text, amount} = req.body;
 
-    const transaction = await Transaction.create(req.body);
+    const user = await User.findById(req.params.uid);
+    if(!user){
+      return res.status(404).json({
+        success:false,
+        error: "User not found"
+      })
+    }
+
+    await User.findById(req.params.uid)
+              .populate('transactions')
+              .exec((err, transactions) => {
+                return res.status(200).json({
+                  success:true,
+                  data: transactions
+                });
+              });
+    
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      success:false,
+      error: 'Server '
+    })
+  }
+}
+
+exports.addUserTransaction = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.uid);
+  
+
+    if(!user){
+      return res.status(404).json({
+        success:false,
+        error: "User not found"
+      })
+    }
+
+    const transaction = await Transaction.create({...req.body, user: req.params.uid});
+
+    User.findOneAndUpdate(
+      {_id: req.params.uid},
+      {$push:{transactions: transaction._id}})
+      .exec();
 
     return res.status(201).json({
       sucess:true,
-      data:transaction
+      data: {transaction: transaction, user: user.username}
     })
   } catch (err) {
     if(err.name === 'ValidationError') {
@@ -55,7 +97,10 @@ exports.deleteTransactions = async (req, res, next) => {
         error: "No transaction found"
       })
     }
-
+    User.findOneAndUpdate(
+      {_id: transaction.user},
+      {$pull:{transactions: req.params.id}})
+      .exec();
     await transaction.remove();
 
     return res.status(200).json({
