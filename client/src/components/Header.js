@@ -13,7 +13,7 @@ export default () => {
    }
  
  return(
-   <nav className='fixed py-2.5 px-4 flex flex-row justify-between align-center top bg-gray-900 text-white w-screen'>
+   <nav className='fixed py-2.5 px-4 flex flex-row justify-between align-center top bg-gray-900 text-white w-screen z-50'>
      <div className='self-center flex flex-row'>
       <p className='font-bold text-xl'>💸 Hao Expensive</p>
       {profile}
