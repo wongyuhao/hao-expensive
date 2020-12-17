@@ -17,7 +17,6 @@ export default () => {
       const enumRes = await Axios.get('/api/v1/enums');
       if(enumRes){
         const {data} = enumRes;
-        console.log(data);
         setEnums(data);
       }
     } catch (err) {

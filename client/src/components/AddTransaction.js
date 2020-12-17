@@ -49,7 +49,6 @@ export const AddTransaction = () => {
   const [source, setSource] = useState('CIMB');
   
   const onSubmit = (data) => {
-    console.log(data);
     const {text, amount, date, source, remarks} = data
     const transaction = {
       text, 

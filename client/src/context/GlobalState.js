@@ -27,8 +27,6 @@ export const GlobalProvider = ({ children }) => {
     try {
       if(userData.user !== undefined){
         const res = await axios.get(`/api/v1/transactions/${userData.user.id}`);
-        console.log('get')
-        console.log(res.data.data.transactions);
        dispatch({
           type: 'GET_TRANSACTIONS',
           payload: res.data.data.transactions
@@ -71,8 +69,6 @@ export const GlobalProvider = ({ children }) => {
     try {
       if(userData.user !== undefined){
        const res = await axios.post(`/api/v1/transactions/${userData.user.id}`, transaction, config);
-       console.log('add res'); 
-       console.log(res)
        dispatch({
          type: 'ADD_TRANSACTION',
          payload: res.data.data.transaction

@@ -13,7 +13,6 @@ export const TransactionList = () => {
   useEffect(()=>{
     if(user === undefined) return;
     getTransactions().catch((err)=>console.log(err));
-    console.log(window.outerHeight);
     // eslint-disable-next-line
   }, [user]);
   
