@@ -1,14 +1,30 @@
-import React, {useEffect, useContext, useState} from 'react';
+import React, {useEffect, useContext} from 'react';
 import Home from './pages/Home'
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 import Header from './components/Header'
 import {  GlobalContext } from './context/GlobalState';
-import {BrowserRouter, Switch, Route, useLocation} from 'react-router-dom';
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import Axios from 'axios';
+
+// eslint-disable-next-line
 export default () => {
-  const {setUserData} = useContext(GlobalContext);
-  const [path, setPath] = useState('/');
+  const {setUserData, setEnums} = useContext(GlobalContext);
+ 
+
+  const getEnums = async() => {
+    try {
+      const enumRes = await Axios.get('/api/v1/enums');
+      if(enumRes){
+        const {data} = enumRes;
+        console.log(data);
+        setEnums(data);
+      }
+    } catch (err) {
+      throw err;
+    }
+  }
+
   const checkLogin = async () => {  
     let token = localStorage.getItem('auth-token');
     if (token === null) {
@@ -25,12 +41,9 @@ export default () => {
       const userRes = await Axios.get('/api/v1/users/get', {
         headers: {"x-auth-token": token}
       }).catch(error => {
-        console.log(error.response)
+       throw error
       });
-
-    console.log('user')
-    console.log(userRes);
-
+  
       setUserData({
         token,
         user: userRes.data
@@ -44,20 +57,24 @@ export default () => {
     
     try {
       checkLogin();
+      getEnums();
       
     } catch (err) {
       console.error(err.message);
     }
-  },[useLocation])
+    // eslint-disable-next-line
+  },[])
   return (
     <div className='flex flex-col'>
       <BrowserRouter>
       <Header  />
-      <Switch>
+      <div className='mt-10'>
+      <Switch >
         <Route exact path="/" component ={Home}/>
         <Route exact path="/login" component ={Login}/>
         <Route exact path="/register" component ={Register}/>
       </Switch>
+      </div>
       
       </BrowserRouter>
     </div>
