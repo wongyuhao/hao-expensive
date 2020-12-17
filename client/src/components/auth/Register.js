@@ -4,7 +4,6 @@ import {useForm} from 'react-hook-form'
 import {GlobalContext} from "../../context/GlobalState";
 import Axios from "axios";
 import ErrorNotice from "../misc/ErrorNotice";
-import { ErrorMessage } from '@hookform/error-message';
 
 export default function Register() {
   const { register, handleSubmit, errors, watch } = useForm();
@@ -40,6 +39,7 @@ export default function Register() {
 
   //do not update state once component is unmounted
   useEffect(() => {
+  // eslint-disable-next-line
     return () => { isRendered = false }; // use effect cleanup to set flag false, if unmounted
   });
 
@@ -52,23 +52,23 @@ export default function Register() {
   
   return (
     <div className="page">
-      <p className='font-black text-2xl my-10 text-white text-opacity-90' >Register a new profile.</p>
-      {error && (
-        <ErrorNotice message={error} clearError={() => setError(undefined)} />
-      )}
+      <p className='font-light text-2xl my-10 text-white ' >Register a new profile.</p>
+      
       <form  className='form self-align-center' onSubmit={handleSubmit(onSubmit)}>
         <input className='form-input' type="text" placeholder="Username" name="username" ref={register} />
         <input className='form-input' type="email" placeholder="E-mail" name="email" ref={register({required: 'This field is required'})} />
-        <ErrorMessage name='email' errors={errors}/>
+        <ErrorNotice name='email' errors={errors}/>
         <input className='form-input' type="password" placeholder="Password" name="password" ref={register({required: 'This field is required', minLength: {
             value: 5,
             message: "Must exceed 5 characters"
           }})} />
-        <ErrorMessage name='password' errors={errors}/>
-        <input className='form-input' type="password" placeholder="Retype Password" name="passwordCheck" ref={register({required: true, validate: value =>
+        <ErrorNotice name='password' errors={errors}/>
+        <input className='form-input' type="password" placeholder="Retype Password" name="passwordCheck" ref={register({required: 'This field is required', validate: value =>
             value === password.current || "Passwords must match"})} />
-        <ErrorMessage name='passwordCheck' errors={errors}/>
-
+        <ErrorNotice name='passwordCheck' errors={errors}/>
+        {error && (
+        <ErrorNotice message={error} clearError={() => setError(undefined)} />
+      )}
         <input className='form-submit' type="submit" value='Register'/>
     </form>
       
