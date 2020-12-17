@@ -13,6 +13,8 @@ export const TransactionList = () => {
   useEffect(()=>{
     if(user === undefined) return;
     getTransactions().catch((err)=>console.log(err));
+
+    // eslint-disable-next-line
   }, [user]);
   
   if(user === undefined) {
@@ -30,7 +32,7 @@ export const TransactionList = () => {
         <h3>History</h3>
         
         <ul className="list">
-          {transactions.map(transaction => (<Transaction key={transaction._id} transaction={transaction} />))}
+          {transactions.map(transaction => (<Transaction key={transaction._id} className='tli' transaction={transaction} />))}
         </ul>
       </>
     )

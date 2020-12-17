@@ -1,15 +1,46 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import { GlobalContext } from '../context/GlobalState';
 import { numberWithCommas } from '../utils/format';
 
 export const Transaction = ({ transaction }) => {
-  const { deleteTransaction } = useContext(GlobalContext);
+  const { deleteTransaction, enums } = useContext(GlobalContext);
+  const [buttonClass, setButtonClass] = useState("hidden");
+  let income = 0;
+  let expense = 0;
+  if(transaction.amount > 0){
+    income = transaction.amount;
+  }else{
+    expense = transaction.amount;
+  }
 
-  const sign = transaction.amount < 0 ? '-' : '+';
-
+  const toggleButtonVisibility =()=>{
+    if(buttonClass === 'hidden') {
+      setButtonClass('')
+    }else{
+      setButtonClass('hidden')
+    }
+  }
+  console.log(buttonClass)
   return (
-    <li className={transaction.amount < 0 ? 'minus' : 'plus'}>
-      {transaction.text} <span>{sign}${numberWithCommas(Math.abs(transaction.amount))}</span><button onClick={() => deleteTransaction(transaction._id)} className="delete-btn">x</button>
+    <li className='p-2 flex flex-col flex-nowrap border-white border-gray-500 border-b-2 w-full' onClick={()=>toggleButtonVisibility()}>
+      <div className= 'flex flex-row justify-between container'>
+        <div className='font-semibold'>{transaction.text}</div> 
+        <div className=' lg:w-3/5  flex flex-row justify-self-end'>
+         <div className='flex flex-row justify-self-end w-3/4'>
+           <div className={`text-green-400 w-1/2 ${income ===0 ? "hidden lg:block lg:invisible":""}`}>{enums.symbols[transaction.currency]}{numberWithCommas(Math.abs(income))}</div>
+           <div className={`text-red-500  w-1/2 ${expense ===0 ? "hidden lg:block lg:invisible":""}`}>{enums.symbols[transaction.currency]}{numberWithCommas(Math.abs(expense))}</div>
+         </div>
+          <em className='hidden lg:block px-2 w-1/4'>{transaction.source}</em>
+          <button 
+            className ={`delete-btn ${buttonClass} px-2`} 
+            onClick={() => {
+              deleteTransaction(transaction._id)
+            }} >
+                ❌
+          </button>
+        </div>
+      </div>
+      <div className='text-sm text-gray-500'>{(transaction.remarks) ? "> " + transaction.remarks : ""}</div>
     </li>
   )
 }
