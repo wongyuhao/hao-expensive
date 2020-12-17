@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @layer base{
+  
   body{
     @apply bg-black text-white;
   }
@@ -14,18 +15,42 @@
   }
 
   .page{
-    @apply flex flex-col items-center justify-center 
+    @apply flex flex-col items-center justify-center p-5
   }
 
   .form{
-   @apply flex flex-col bg-gray-800 p-4 rounded-md
+   @apply flex flex-col bg-gray-800 p-4 rounded-md 
   }
 
   .form-input{
-    @apply p-3 rounded mt-1.5 mb-2 bg-gray-600 w-72
+    @apply p-3 rounded mt-1.5 mb-2 bg-gray-600 w-full
   }
 
   .form-submit{
     @apply p-3 rounded bg-yellow-500 text-white mt-7 hover:bg-yellow-600 cursor-pointer
   }
+
+  .err{
+    @apply text-red-600 px-1.5
+  }
 }
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+}
+input[type=number] {
+  -moz-appearance:textfield;
+}
+
+
+input[type="date"]::before { 
+	content: attr(data-placeholder);
+	width: 100%;
+}
+
+input[type="date"]:focus::before,
+input[type="date"]:valid::before { display: none }
+
+
