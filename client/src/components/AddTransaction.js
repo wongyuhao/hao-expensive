@@ -2,7 +2,6 @@ import React, { useContext} from 'react'
 import { GlobalContext } from '../context/GlobalState';
 import { useForm, Controller } from 'react-hook-form';
 import Select from 'react-select'
-import makeAnimated from 'react-select/animated';
 import {backupEnums} from '../utils/backupEnums';
 import { arrayToOptions } from '../utils/format';
 
@@ -11,12 +10,17 @@ const selectStyle = {
     ...provided,
     color: state.isSelected ? 'white' : 'black'
   }),
-  singleValue: (provided, state) => {
-    const opacity = state.isDisabled ? 0.5 : 1;
-    const transition = 'opacity 300ms';
+  container: (provided, state) => ({
+    ...provided,
+    zIndex : 1
+  }),
+  
+  // singleValue: (provided, state) => {
+  //   const opacity = state.isDisabled ? 0.5 : 1;
+  //   const transition = 'opacity 300ms';
 
-    return { ...provided, opacity, transition, ...dot()};
-  }
+  //   return { ...provided, opacity, transition, ...dot()};
+  // }
 }
 const dot = (color = '#ccc') => ({
   alignItems: 'center',
@@ -64,9 +68,10 @@ export const AddTransaction = () => {
       <input className= 'form-input' step='.01' type="number" placeholder="Amount" name="amount" ref={register} />
       <hr className='my-4'/> 
       <Controller
-        className = "mt-2.5 rounded z-50"
+        className = "mt-2.5 rounded "
         as={Select}
-        styles={selectStyle}
+        styles={{...selectStyle, menu: styles => ({ ...styles, zIndex: 999 })}}
+        menuPortalTarget={document.querySelector('body')}
         options={arrayToOptions(options.currencies)}
         name="currency"
         control={control}
@@ -79,7 +84,7 @@ export const AddTransaction = () => {
       />
 
       <Controller
-        className = "mt-2.5 rounded z-50"
+        className = "mt-2.5 rounded "
         as={Select}
         styles={selectStyle}
         options={arrayToOptions(options.sources)}
