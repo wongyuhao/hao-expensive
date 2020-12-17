@@ -1,3 +1,4 @@
+  // eslint-disable-next-line
 export default (state, action) => {
   switch(action.type) {
     case 'GET_TRANSACTIONS':{
@@ -29,6 +30,12 @@ export default (state, action) => {
        ...state,
        transactions: []
      }
+
+    case 'SET_ENUMS':
+      return{
+        ...state,
+        enums:action.payload
+      }
     default:
       return state;
   }

@@ -7,7 +7,7 @@ const initialState = {
   transactions: [],
   error: null,
   loading: true, 
-  
+  enums: undefined,
   
 }
 
@@ -92,6 +92,13 @@ export const GlobalProvider = ({ children }) => {
     });
   }
 
+  const setEnums = (data) =>{
+    dispatch({
+      type: 'SET_ENUMS',
+      payload: data
+    })
+  }
+
   return (<GlobalContext.Provider value={{
     transactions: state.transactions,
     error: state.error,
@@ -102,7 +109,9 @@ export const GlobalProvider = ({ children }) => {
     clearLocalTransactions,
     userData,
     setUserData,
-    user: userData.user
+    user: userData.user,
+    setEnums, 
+    enums: state.enums
    
   }}>
     {children}
