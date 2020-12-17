@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-const { currencies, sources } = require('../config/enums');
-
+const {enums:{currencies, sources}} = require('../config/enums');
 exports.TransactionSchema = new mongoose.Schema({
   text:{
     type: String,

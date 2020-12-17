@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const {TransactionSchema, Transaction} = require('./Transaction')
 
 exports.UserSchema = new mongoose.Schema({
   email: {type: String, required: true, unique: true},

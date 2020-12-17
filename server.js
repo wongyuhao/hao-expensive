@@ -1,13 +1,10 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
-const passport = require('passport');
-const LocalStrategy = require('passport-local');
-const passportLocalMongoose = require('passport-local-mongoose');
 const path = require('path');
 const transactions = require('./routes/transactions.js');
 const users = require('./routes/users.js');
+const {enums:{currencies, sources, symbols}} = require('./config/enums')
 dotenv.config({path: './config/config.env'});
 
 connectDB();
@@ -18,7 +15,13 @@ app.use(express.json());
 
 app.use('/api/v1/users', users);
 app.use('/api/v1/transactions', transactions);
-
+app.get('/api/v1/enums', (req, res) => {
+  res.json({
+    currencies, 
+    sources, 
+    symbols
+  })
+})
 
 
 
@@ -28,6 +31,7 @@ if(process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
   })
 }
+
 
 const PORT = process.env.PORT || 5000;
 

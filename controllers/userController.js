@@ -1,7 +1,7 @@
 const {User} = require('../models/User');
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken');
-
+const {enums} = require('../config/enums')
 exports.getUsers = async (req, res, next) => {
   try {
     const users = await User.find();
@@ -88,33 +88,6 @@ exports.registerUser = async (req, res) => {
 
 }
 
-
-// exports.addUser = async (req, res, next) => {
-//   try {
-
-//     const user = await User.create(req.body);
-
-    
-//     return res.status(201).json({
-//       sucess:true,
-//       data: user
-//     })
-//   } catch (err) {
-//     if(err.name === 'ValidationError') {
-//       const messages = Object.values(err.errors).map(val => val.message);
-
-//       return res.status(400).json({
-//         success:false,
-//         error: messages
-//       })
-//     }else{
-//       return res.status(500).json({
-//         success:false,
-//         error: 'Server '
-//       })
-//     }
-//   }
-// }
 
 exports.deleteUser = async (req, res, next) => {
   try {
@@ -216,3 +189,4 @@ exports.getUser = async(req, res) => {
     id: user._id,
   });
 }
+

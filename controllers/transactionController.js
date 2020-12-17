@@ -1,6 +1,6 @@
 const {Transaction} = require('../models/Transaction');
 const {User} = require('../models/User');
-
+const {enums} = require('../config/enums');
 
 exports.getAllTransactions = async (req, res, next) => {
   try {
@@ -114,3 +114,4 @@ exports.deleteTransactions = async (req, res, next) => {
     })
   }
 }
+
