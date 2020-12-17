@@ -18,13 +18,15 @@ export default function Login() {
       const loginRes = await Axios.post(
         "/api/v1/users/login",
         loginUser
-      );
-      setUserData({
-        token: loginRes.data.token,
-        user: loginRes.data.user,
-      });
-      localStorage.setItem("auth-token", loginRes.data.token);
-      history.push("/");
+      ).then( (loginRes) => {
+        setUserData({
+          token: loginRes.data.token,
+          user: loginRes.data.user,
+        });
+        localStorage.setItem("auth-token", loginRes.data.token);
+        history.push("/");
+      }).catch((err)=> {throw err});
+      
     } catch (err) {
       err.response.data.error && setError(err.response.data.error);
     }
@@ -36,8 +38,7 @@ export default function Login() {
   useEffect(() => {
   // eslint-disable-next-line
     return () => { isRendered = false }; // use effect cleanup to set flag false, if unmounted
-    
-  });
+  },[]);
 
   if(user) {
     return <Redirect to={'/'}/>
