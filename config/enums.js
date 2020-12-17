@@ -1,9 +1,36 @@
 
-exports.enums = {
-  currencies : ['USD', 'MYR'],
-  sources : ['CIMB', 'MAYBANK', 'OTHER'],
-  symbols: {
-    "USD" : "$",
-    "MYR" : "RM"
+
+const currencies = [
+  {
+    code: "MYR",
+    symbol: "RM"
+  },
+  {
+    code: "USD",
+    symbol: "$"
   }
+]
+
+exports.enums = {
+  currencies: currencies,
+  sources : [
+    {
+      name: "CIMB",
+      currency: currencies[0]
+    },
+    {
+      name: "DEV_ONLY",
+      currency: currencies[1]
+    },
+    {
+      name: "MAYBANK",
+      currency: currencies[0]
+    },
+    {
+      name: "OTHER",
+      currency: currencies[1]
+    }
+  ],
+  
+  
 }

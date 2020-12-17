@@ -1,6 +1,6 @@
 import React, { useContext, useEffect} from 'react';
-import { Transaction } from './Transaction';
-
+import { Transaction } from './Transaction';  
+import ReactPaginate from 'react-paginate';
 import { GlobalContext } from '../context/GlobalState';
 
 
@@ -13,7 +13,7 @@ export const TransactionList = () => {
   useEffect(()=>{
     if(user === undefined) return;
     getTransactions().catch((err)=>console.log(err));
-
+    console.log(window.outerHeight);
     // eslint-disable-next-line
   }, [user]);
   
@@ -21,7 +21,6 @@ export const TransactionList = () => {
     return (
       <>
         <h3>History</h3>
-        
         <em>Loading...</em>
       </>
     )
@@ -29,11 +28,24 @@ export const TransactionList = () => {
     
     return (
       <>
-        <h3>History</h3>
+        <h1 className='text-4xl pt-4 pb-3 font-bold'>History</h1>
         
         <ul className="list">
           {transactions.map(transaction => (<Transaction key={transaction._id} className='tli' transaction={transaction} />))}
         </ul>
+
+        <ReactPaginate
+          previousLabel={'previous'}
+          nextLabel={'next'}
+          breakLabel={'...'}
+          breakClassName={'break-me'}
+          pageCount={3}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          containerClassName={'pagination'}
+          subContainerClassName={'pages pagination'}
+          activeClassName={'active'}
+        />
       </>
     )
   }

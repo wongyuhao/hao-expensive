@@ -52,6 +52,8 @@ const Stats = () => {
     <Box> MYR Income: {incomeFilter(transactions, 'currency', 'MYR')}</Box>
     <Box> USD Expense: {expenseFilter(transactions, 'currency', 'USD')};</Box>
     <Box> MYR Expense: {expenseFilter(transactions, 'currency', 'MYR')};</Box>
+    <Box> Maybank Total: {totalFilter(transactions,'source', 'MAYBANK')}</Box>
+    
     </div>
   )
 
