@@ -3,7 +3,7 @@ import { GlobalContext } from '../context/GlobalState';
 import { useForm, Controller } from 'react-hook-form';
 import Select from 'react-select'
 import {backupEnums} from '../utils/backupEnums';
-import { arrayToOptions } from '../utils/format';
+import { dot } from '../utils/format';
 
 const selectStyle = {
   option: (provided, state) => ({
@@ -22,20 +22,6 @@ const selectStyle = {
   //   return { ...provided, opacity, transition, ...dot()};
   // }
 }
-const dot = (color = '#ccc') => ({
-  alignItems: 'center',
-  display: 'flex',
-
-  ':before': {
-    backgroundColor: color,
-    borderRadius: 10,
-    content: '" "',
-    display: 'block',
-    marginRight: 8,
-    height: 10,
-    width: 10,
-  },
-});
 
 
 
@@ -49,12 +35,14 @@ export const AddTransaction = () => {
   const [source, setSource] = useState('CIMB');
   
   const onSubmit = (data) => {
-    const {text, amount, date, source, remarks} = data
+    // console.log(data);
+    const {text, amount, date, source, category, remarks} = data
     const transaction = {
       text, 
       amount: +amount,
       date,
-      currency: getCurrency(source.value) ,
+      currency: getCurrency(source.value),
+      category: category.value,
       source: source.value, 
       remarks, 
     }
@@ -68,10 +56,7 @@ export const AddTransaction = () => {
   
  
   return (
-
-    
-  
-      <form className= 'form ' onSubmit={handleSubmit(onSubmit)}>
+    <form className= 'form ' onSubmit={handleSubmit(onSubmit)}>
       <input className= 'form-input' type="text" placeholder="Title" name="text" ref={register({required: true})} />
       <input className= 'form-input' step='.01' type="number" placeholder="Amount" name="amount" ref={register} />
       <hr className='my-4'/> 
@@ -81,13 +66,37 @@ export const AddTransaction = () => {
         as={Select}
         styles={{...selectStyle, menu: provided => ({ ...provided, zIndex: "9999 !important" })}}
         menuPortalTarget={document.querySelector('body')}
-        options={arrayToOptions(options.sources.map(obj => obj))}
+        options={
+          options.sources.map(obj =>
+            ({
+              "value" : obj.name.toUpperCase(),
+              "label": `[${obj.currency.symbol}]\t` + obj.name.toUpperCase()
+            })
+          )
+        }
         name="source"
         control={control}
         placeholder={"Source..."}
-        defaultValue={""}
-        
-        
+        defaultValue={""}   
+      />
+
+      <Controller
+        className = "mt-2.5 rounded "
+        as={Select}
+        styles={{...selectStyle, menu: provided => ({ ...provided, zIndex: "9999 !important" })}}
+        menuPortalTarget={document.querySelector('body')}
+        options={
+          options.categories.map(obj =>
+            ({
+              "value" : obj.name,
+              "label":obj.name
+            })
+          )
+        }
+        name="category"
+        control={control}
+        placeholder={"Category..."}
+        defaultValue={""}   
       />
      
 

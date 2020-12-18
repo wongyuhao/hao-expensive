@@ -37,6 +37,7 @@ const Stats = () => {
         .toFixed(2);
     return expense
   }
+  
 
   const Box = ({children}) =>{
     return <div className='border-white border-2 border-solid p-5'>

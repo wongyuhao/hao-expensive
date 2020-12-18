@@ -13,14 +13,37 @@ export function toTitleCase(str) {
   );
 }
 
-export function arrayToOptions(arr){
-  return (
-    arr.map(option => {
-      let obj = {};
-      obj['value'] = option.name.toUpperCase() ;
-      obj['label'] = `[${option.currency.symbol}]\t` + option.name.toUpperCase();
-      return obj
-    })
-  )
+ export const dotBefore = (color = '#ccc') => ({
+  alignItems: 'center',
+  display: 'flex',
+
+  ':before': {
+    backgroundColor: color,
+    borderRadius: 10,
+    content: '" "',
+    display: 'block',
+    marginRight: 8,
+    height: 10,
+    width: 10,
+  },
+});
+
+export const getSymbol = (currency, enums) => {
+  return (enums.currencies.filter(obj=>{return obj.code === currency })[0].symbol)
 }
 
+export const getCategoryColor = (category, enums) => {
+  return (enums.categories.filter(obj => {return obj.name === category})[0].color)
+}
+
+export const dot = (color = '#ccc') => ({
+  alignItems: 'center',
+  display: 'flex',
+  backgroundColor: color,
+  borderRadius: 10,
+  content: '" "',
+  display: 'block',
+  height: '0.7rem',
+  width: '0.7rem',
+  marginRight: '1rem'
+});
