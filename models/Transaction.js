@@ -18,20 +18,26 @@ exports.TransactionSchema = new mongoose.Schema({
   currency:{ 
     type: String, 
     enum: enums.currencies.map(obj => obj.code),
-    default: "",
+    default: "USD",
     required: true
   }, 
   source:{
     type: String,
     enum: enums.sources.map(obj => obj.name),
     required: true,
-    default: ""
+    default: "OTHER"
   },
   remarks:{
     type:String
   },
   user:{
     type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true
+  },
+  category: {
+    type: String,
+    enum: enums.categories.map(obj => obj.name),
+    required: true,
+    default: 'Misc'
   }
   
   
