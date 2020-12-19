@@ -3,27 +3,50 @@ import { GlobalContext } from '../context/GlobalState';
 import { useForm, Controller } from 'react-hook-form';
 import Select from 'react-select'
 import {backupEnums} from '../utils/backupEnums';
-import { dot } from '../utils/format';
+import { dot, dotBefore } from '../utils/format';
 import moment from 'moment'
-const selectStyle = {
-  option: (provided, state) => ({
-    ...provided,
-    color: state.isSelected ? 'white' : 'black',
-  }),
-  container: (provided, state) => ({
-    ...provided,
-    
-  }),
-  
-  // singleValue: (provided, state) => {
-  //   const opacity = state.isDisabled ? 0.5 : 1;
-  //   const transition = 'opacity 300ms';
-
-  //   return { ...provided, opacity, transition, ...dot()};
-  // }
-}
+import chroma from 'chroma-js'
 
 
+const getContrast = (color, compared) => (
+  chroma.contrast(color, compared) > 2
+          ? 'white'
+          : 'black'
+  )
+
+
+const colourStyles = {
+  control: styles => ({ ...styles, backgroundColor: 'white' }),
+  option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+    const color = chroma(data.color);
+    return {
+      ...styles,
+      ...dotBefore(isSelected? getContrast(color, 'white') : data.color),
+      backgroundColor: isDisabled
+        ? null
+        : isSelected
+          ? data.color
+          : isFocused
+            ? color.alpha(0.1).css()
+            : null,
+      color: isDisabled
+        ? '#ccc'
+        : isSelected
+          ? getContrast(color, 'white')
+          : data.color,
+      cursor: isDisabled ? 'not-allowed' : 'default',
+
+      ':active': {
+        ...styles[':active'],
+        backgroundColor: !isDisabled && (isSelected ? data.color : color.alpha(0.3).css()),
+      },
+    };
+  },
+  menu: provided => ({ ...provided, zIndex: "9999 !important" }),
+  input: styles => ({ ...styles, ...dotBefore() }),
+  placeholder: styles => ({ ...styles, ...dotBefore() }),
+  singleValue: (styles, { data }) => ({ ...styles, ...dotBefore(data.color) }),
+};
 
 
 export const AddTransaction = () => {
@@ -71,13 +94,15 @@ export const AddTransaction = () => {
         className = "mt-2.5 rounded "
         as={Select}
         rules={{ required: true }}
-        styles={{...selectStyle, menu: provided => ({ ...provided, zIndex: "9999 !important" })}}
+        styles={colourStyles}
         menuPortalTarget={document.querySelector('body')}
         options={
           options.sources.map(obj =>
             ({
               "value" : obj.name.toUpperCase(),
-              "label": `[${obj.currency.symbol}]\t` + obj.name.toUpperCase()
+              "label": obj.name.toUpperCase(),
+              "color" : obj.color || "#000",
+              "symbol" : obj.currency.symbol
             })
           )
         }
@@ -91,13 +116,14 @@ export const AddTransaction = () => {
         className = "mt-2.5 rounded "
         as={Select}
         rules={{ required: true }}
-        styles={{...selectStyle, menu: provided => ({ ...provided, zIndex: "9999 !important" })}}
+        styles={colourStyles}
         menuPortalTarget={document.querySelector('body')}
         options={
           options.categories.map(obj =>
             ({
               "value" : obj.name,
-              "label":obj.name
+              "label":obj.name,
+              "color" : obj.color || "#000"
             })
           )
         }

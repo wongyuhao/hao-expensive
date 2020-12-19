@@ -14,7 +14,8 @@ const currencies = [
 const sources = [
   {
     name: "CIMB",
-    currency: currencies[0]
+    currency: currencies[0],
+    color: '#0000FF'
   },
   {
     name: "DEV_ONLY",
