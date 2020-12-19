@@ -22,9 +22,10 @@ export function toTitleCase(str) {
     borderRadius: 10,
     content: '" "',
     display: 'block',
-    marginRight: 8,
-    height: 10,
-    width: 10,
+    height: '0.7rem',
+    width: '0.7rem',
+    marginTop:'0.1rem',
+    marginRight: '1rem'
   },
 });
 
