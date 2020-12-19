@@ -36,6 +36,11 @@ export default (state, action) => {
         ...state,
         enums:action.payload
       }
+    case 'SET_PATHNAME':
+      return {
+        ...state,
+        pathname: action.payload
+      }
     default:
       return state;
   }

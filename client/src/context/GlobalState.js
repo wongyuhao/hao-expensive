@@ -8,6 +8,7 @@ const initialState = {
   error: null,
   loading: true, 
   enums: undefined,
+  pathname: "/login",
   
 }
 
@@ -87,6 +88,13 @@ export const GlobalProvider = ({ children }) => {
       type: 'CLEAR_LOCAL'
     });
   }
+  
+  const setPathname = (pathname) => {
+    dispatch({
+      type: 'SET_PATHNAME',
+      payload: pathname
+    })
+  }
 
   const setEnums = (data) =>{
     dispatch({
@@ -107,7 +115,9 @@ export const GlobalProvider = ({ children }) => {
     setUserData,
     user: userData.user,
     setEnums, 
-    enums: state.enums
+    enums: state.enums,
+    pathname: state.pathname,
+    setPathname
    
   }}>
     {children}

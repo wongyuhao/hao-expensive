@@ -6,7 +6,7 @@ import { AddTransaction } from '../components/AddTransaction';
 import { GlobalContext } from '../context/GlobalState';
   // eslint-disable-next-line
 export default () => {
-  const {user} = useContext(GlobalContext);
+  const {user, setPathname} = useContext(GlobalContext);
 
   if(!user){
     return(
