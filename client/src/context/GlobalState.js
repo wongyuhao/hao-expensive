@@ -8,9 +8,11 @@ const initialState = {
   error: null,
   loading: true, 
   enums: undefined,
+  enumMap: undefined,
   pathname: "/login",
   
 }
+
 
 // Create context
 export const GlobalContext = createContext(initialState);
@@ -98,6 +100,7 @@ export const GlobalProvider = ({ children }) => {
   }
 
   const setEnums = (data) =>{
+
     dispatch({
       type: 'SET_ENUMS',
       payload: data

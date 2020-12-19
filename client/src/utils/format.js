@@ -1,3 +1,4 @@
+import { compareSync } from 'bcryptjs';
 import chroma from 'chroma-js';
 
 export function numberWithCommas(x) {
@@ -30,11 +31,15 @@ export function toTitleCase(str) {
 });
 
 export const getSymbol = (currency, enums) => {
-  return (enums.currencies.filter(obj=>{return obj.code === currency })[0].symbol)
+  return (enums.currencies.find(obj=>{return obj.code === currency }).symbol) || ""
 }
 
 export const getCategoryColor = (category, enums) => {
-  return (enums.categories.filter(obj => {return obj.name === category})[0].color)
+  return (enums.categories.find(obj => {return obj.name === category}).color) || ""
+}
+
+export const getSourceColor = (source, enums)=> {
+  return enums.sources.find(obj => obj.name ===source).color
 }
 
 export const dot = (color = '#ccc') => {
@@ -51,6 +56,8 @@ return({
   content: '" "',
   height: '0.7rem',
   width: '0.7rem',
+  zIndex:2,
   marginTop:'0.1rem',
   marginRight: '1rem'
 });}
+

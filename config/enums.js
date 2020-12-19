@@ -24,7 +24,8 @@ const sources = [
   },
   {
     name: "OTHER",
-    currency: currencies[1]
+    currency: currencies[1],
+    color: '#ccc'
   }
 ]
 
