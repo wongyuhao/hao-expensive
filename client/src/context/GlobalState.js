@@ -28,6 +28,7 @@ export const GlobalProvider = ({ children }) => {
     try {
       if(userData.user !== undefined){
         const res = await axios.get(`/api/v1/transactions/${userData.user.id}`);
+        console.log(res.data.data.transactions)
        dispatch({
           type: 'GET_TRANSACTIONS',
           payload: res.data.data.transactions

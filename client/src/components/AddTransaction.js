@@ -4,7 +4,7 @@ import { useForm, Controller } from 'react-hook-form';
 import Select from 'react-select'
 import {backupEnums} from '../utils/backupEnums';
 import { dot } from '../utils/format';
-
+import moment from 'moment'
 const selectStyle = {
   option: (provided, state) => ({
     ...provided,
@@ -29,18 +29,32 @@ const selectStyle = {
 export const AddTransaction = () => {
 
   const { addTransaction, enums} = useContext(GlobalContext);
-  const { control, register, handleSubmit } = useForm();
+  const { control, register, handleSubmit } = useForm({
+    defaultValues: {
+      date: Date.now()
+    }
+  });
   const options = (enums !== undefined) ? enums : backupEnums;
-  const [currency, setCurrency] = useState(options.currencies[0])
-  const [source, setSource] = useState('CIMB');
-  
+  const dateGenerator  = (date) => {
+    if(moment(date).isValid()){
+      console.log('valid');
+      console.log(moment(date).utc().toDate())
+      return(moment(date).utc().toDate())
+    }else{
+      console.log('invalid');
+      console.log(moment(Date.now()).toDate())
+      return(moment(Date.now()).toDate())
+    }
+ 
+  }
   const onSubmit = (data) => {
     // console.log(data);
     const {text, amount, date, source, category, remarks} = data
+    
     const transaction = {
       text, 
       amount: +amount,
-      date,
+      createdAt:dateGenerator(date),
       currency: getCurrency(source.value),
       category: category.value,
       source: source.value, 
@@ -64,6 +78,7 @@ export const AddTransaction = () => {
       <Controller
         className = "mt-2.5 rounded "
         as={Select}
+        rules={{ required: true }}
         styles={{...selectStyle, menu: provided => ({ ...provided, zIndex: "9999 !important" })}}
         menuPortalTarget={document.querySelector('body')}
         options={
@@ -83,6 +98,7 @@ export const AddTransaction = () => {
       <Controller
         className = "mt-2.5 rounded "
         as={Select}
+        rules={{ required: true }}
         styles={{...selectStyle, menu: provided => ({ ...provided, zIndex: "9999 !important" })}}
         menuPortalTarget={document.querySelector('body')}
         options={
@@ -102,7 +118,7 @@ export const AddTransaction = () => {
 
       
       <input className='rounded text-black mt-2.5 p-3 'type="textarea" placeholder="Remarks" name="remarks" ref={register} />
-      <input className='rounded text-black mt-2.5 p-3'type="date" data-placeholder="Date"  name="date" ref={register} />
+      <input className='rounded text-black mt-2.5 p-3'type="date" data-placeholder="Date" name="date" ref={register} />
 
       <input className='form-submit' type="submit" value='Add'/>
     </form>

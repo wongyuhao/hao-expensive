@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import { GlobalContext } from '../context/GlobalState';
 import { numberWithCommas, getSymbol, getCategoryColor, dot } from '../utils/format';
-
+import moment from 'moment'
 export const Transaction = ({ transaction }) => {
   const { deleteTransaction, enums } = useContext(GlobalContext);
   const [buttonClass, setButtonClass] = useState("hidden");
@@ -20,7 +20,7 @@ export const Transaction = ({ transaction }) => {
       setButtonClass('hidden')
     }
   }
-  
+  console.log()
   return (
     <li className='p-2 flex flex-col flex-nowrap border-white border-gray-500 border-b-2 w-full' onClick={()=>toggleButtonVisibility()}>
       <div className= 'flex flex-row justify-between container'>
