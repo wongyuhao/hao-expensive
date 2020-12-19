@@ -1,4 +1,4 @@
-
+import chroma from 'chroma-js';
 
 export function numberWithCommas(x) {
   return x.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -37,7 +37,13 @@ export const getCategoryColor = (category, enums) => {
   return (enums.categories.filter(obj => {return obj.name === category})[0].color)
 }
 
-export const dot = (color = '#ccc') => ({
+export const dot = (color = '#ccc') => {
+
+  if(chroma.deltaE(color, 'black') < 1){
+    color = chroma('white')
+  }
+
+return({
   alignItems: 'center',
   display: 'flex',
   backgroundColor: color,
@@ -47,4 +53,4 @@ export const dot = (color = '#ccc') => ({
   width: '0.7rem',
   marginTop:'0.1rem',
   marginRight: '1rem'
-});
+});}

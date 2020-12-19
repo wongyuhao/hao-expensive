@@ -15,15 +15,12 @@ const sources = [
   {
     name: "CIMB",
     currency: currencies[0],
-    color: '#0000FF'
-  },
-  {
-    name: "DEV_ONLY",
-    currency: currencies[1]
+    color: '#ed1c24'
   },
   {
     name: "MAYBANK",
-    currency: currencies[0]
+    currency: currencies[0],
+    color: '#fecf07'
   },
   {
     name: "OTHER",
@@ -38,11 +35,19 @@ const categories = [
   },
   {
     name: 'Tech',
-    color: '#0000FF'
+    color: '#3498db'
+  },
+  {
+    name: 'Entertainment',
+    color: '#ff009d'
+  },
+  {
+    name: 'Planned',
+    color: '#626567'
   },
   {
     name: 'Food',
-    color: '#0000FF'
+    color: '#8e44ad'
   },
   {
     name: 'Education',
@@ -50,15 +55,15 @@ const categories = [
   },
   {
     name: 'Groceries',
-    color: '#0000FF'
+    color: '#2ecc71'
   },
   {
     name: 'Housing',
-    color: '#0000FF'
+    color: '#c0392b'
   },
   {
     name: 'Misc',
-    color: '#FFF'
+    color: '#000'
   }
 ]
 
