@@ -29,32 +29,24 @@ const selectStyle = {
 export const AddTransaction = () => {
 
   const { addTransaction, enums} = useContext(GlobalContext);
-  const { control, register, handleSubmit } = useForm({
-    defaultValues: {
-      date: Date.now()
-    }
-  });
+  const { control, register, handleSubmit } = useForm();
   const options = (enums !== undefined) ? enums : backupEnums;
+
   const dateGenerator  = (date) => {
     if(moment(date).isValid()){
-      console.log('valid');
-      console.log(moment(date).utc().toDate())
       return(moment(date).utc().toDate())
     }else{
-      console.log('invalid');
-      console.log(moment(Date.now()).toDate())
-      return(moment(Date.now()).toDate())
+      return(moment().utc().toDate())
     }
  
   }
   const onSubmit = (data) => {
-    // console.log(data);
     const {text, amount, date, source, category, remarks} = data
     
     const transaction = {
       text, 
       amount: +amount,
-      createdAt:dateGenerator(date),
+      createdAt: dateGenerator(date),
       currency: getCurrency(source.value),
       category: category.value,
       source: source.value, 
