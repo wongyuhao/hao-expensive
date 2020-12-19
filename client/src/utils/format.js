@@ -42,8 +42,8 @@ export const dot = (color = '#ccc') => ({
   backgroundColor: color,
   borderRadius: 10,
   content: '" "',
-  display: 'block',
   height: '0.7rem',
   width: '0.7rem',
+  marginTop:'0.1rem',
   marginRight: '1rem'
 });
