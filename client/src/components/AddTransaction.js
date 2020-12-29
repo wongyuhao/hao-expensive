@@ -16,7 +16,7 @@ const getContrast = (color, compared) => (
 
 
 const colourStyles = {
-  control: styles => ({ ...styles, backgroundColor: 'rgb(82,82,82)', border:'none', width: "100%", }),
+  control: styles => ({ ...styles, backgroundColor: currGray, border:'none', width: "100%", }),
   option: (styles, { data, isDisabled, isFocused, isSelected }) => {
     const color = chroma(data.color);
     return {
@@ -28,7 +28,7 @@ const colourStyles = {
           ? data.color
           : isFocused
             ? color.alpha(0.1).css()
-            : 'rgb(82,82,82)',
+            : currGray,
       color: isDisabled
         ? '#ccc'
         : isSelected
