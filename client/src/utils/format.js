@@ -1,4 +1,4 @@
-import { compareSync } from 'bcryptjs';
+
 import chroma from 'chroma-js';
 
 export function numberWithCommas(x) {
