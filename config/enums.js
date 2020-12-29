@@ -23,6 +23,11 @@ const sources = [
     color: '#fecf07'
   },
   {
+    name: "Bank of America",
+    currency: currencies[1],
+    color: '#0065B3'
+  },
+  {
     name: "OTHER",
     currency: currencies[1],
     color: '#ccc'

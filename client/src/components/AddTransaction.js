@@ -7,7 +7,7 @@ import { dot, dotBefore } from '../utils/format';
 import moment from 'moment'
 import chroma from 'chroma-js'
 
-
+const currGray = 'rgb(82,82,82)'
 const getContrast = (color, compared) => (
   chroma.contrast(color, compared) > 2
           ? 'white'
@@ -16,7 +16,7 @@ const getContrast = (color, compared) => (
 
 
 const colourStyles = {
-  control: styles => ({ ...styles, backgroundColor: 'white' }),
+  control: styles => ({ ...styles, backgroundColor: 'rgb(82,82,82)', border:'none', width: "100%", }),
   option: (styles, { data, isDisabled, isFocused, isSelected }) => {
     const color = chroma(data.color);
     return {
@@ -28,12 +28,14 @@ const colourStyles = {
           ? data.color
           : isFocused
             ? color.alpha(0.1).css()
-            : null,
+            : 'rgb(82,82,82)',
       color: isDisabled
         ? '#ccc'
         : isSelected
           ? getContrast(color, 'white')
-          : data.color,
+          : chroma.contrast(color, currGray) > 3
+            ? data.color
+            : color.brighten(0.5).css(),
       cursor: isDisabled ? 'not-allowed' : 'default',
 
       ':active': {
@@ -42,10 +44,22 @@ const colourStyles = {
       },
     };
   },
-  menu: provided => ({ ...provided, zIndex: "9999 !important" }),
-  input: styles => ({ ...styles, ...dotBefore() }),
-  placeholder: styles => ({ ...styles, ...dotBefore() }),
-  singleValue: (styles, { data }) => ({ ...styles, ...dotBefore(data.color) }),
+  menu: provided => ({ ...provided,backgroundColor:'rgb(82,82,82)', zIndex: "9999 !important" }),
+  placeholder: styles => ({ ...styles }),
+  singleValue: (styles, { data }) => {
+    const color = chroma(data.color);
+    return ({
+      ...styles, 
+      maxWidth:'100%',
+      color: chroma.contrast(color, currGray) > 3
+             ? color
+             : color.brighten(0.5).css(),
+      "font-style":'italic'
+   })
+  }
+  
+  
+  
 };
 
 
@@ -86,12 +100,12 @@ export const AddTransaction = () => {
  
   return (
     <form className= 'form ' onSubmit={handleSubmit(onSubmit)}>
-      <input className= 'form-input' type="text" placeholder="Title" name="text" ref={register({required: true})} />
-      <input className= 'form-input' step='.01' type="number" placeholder="Amount" name="amount" ref={register} />
-      <hr className='my-4'/> 
+      <input className= 'dark-input' type="text" placeholder="Title" name="text" ref={register({required: true})} />
+      <input className= 'dark-input' step='.01' type="number" placeholder="Amount" name="amount" ref={register} />
+      <hr className='mt-2 mb-4'/> 
 
       <Controller
-        className = "mt-2.5 rounded "
+        className = "mb-2.5 rounded"
         as={Select}
         rules={{ required: true }}
         styles={colourStyles}
@@ -113,7 +127,7 @@ export const AddTransaction = () => {
       />
 
       <Controller
-        className = "mt-2.5 rounded "
+        className = "mb-2.5 rounded "
         as={Select}
         rules={{ required: true }}
         styles={colourStyles}
@@ -135,8 +149,8 @@ export const AddTransaction = () => {
      
 
       
-      <input className='rounded text-black mt-2.5 p-3 'type="textarea" placeholder="Remarks" name="remarks" ref={register} />
-      <input className='rounded text-black mt-2.5 p-3'type="date" data-placeholder="Date" name="date" ref={register} />
+      <input className='rounded dark-input 'type="textarea" placeholder="Remarks" name="remarks" ref={register} />
+      <input className='rounded dark-input'type="date" data-placeholder="Date" name="date" ref={register} />
 
       <input className='form-submit' type="submit" value='Add'/>
     </form>

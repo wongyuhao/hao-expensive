@@ -19,7 +19,7 @@ export default function Register() {
    if(isRendered){
     try {
       await Axios.post("/api/v1/users/register", data);
-      const loginRes = await Axios.post("/api/v1/users/login", {
+      await Axios.post("/api/v1/users/login", {
         email: data.email,
         password: data.password,
       }).then((loginRes)=>{

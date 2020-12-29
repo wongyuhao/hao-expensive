@@ -67,7 +67,7 @@ export default () => {
     <div className='flex flex-col'>
       <BrowserRouter>
       <Header  />
-      <div className='mt-10'>
+      <div className='pt-10'>
       <Switch >
         <Route exact path="/" component ={Home}/>
         <Route exact path="/login" component ={Login}/>

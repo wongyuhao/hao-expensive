@@ -16,8 +16,12 @@ export const TransactionList = () => {
   
   
   return (
-    <div className='bg-gray-900 px-2.5 py-3.5'>
-    <h1 className='text-4xl p-3 font-bold'>History</h1>
+    <div className='bg-gray-900 px-2.5 py-3.5 min-h-full rounded-lg lg:mr-3  overflow-y-scroll' style={{maxHeight:'80vh'}}>
+      <div className='flex flex-row justify-between p-3'>
+        <h1 className='text-4xl  font-bold'>History</h1>
+        <button>Filter</button>
+      </div>
+    
     
     
     {(user === undefined) ? 

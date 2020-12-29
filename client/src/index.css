@@ -22,8 +22,13 @@
    @apply flex flex-col bg-gray-800 p-4 rounded-md 
   }
 
+
   .form-input{
-    @apply p-3 rounded mt-1.5 mb-2 bg-gray-600 w-full
+    @apply p-2.5 rounded mb-2 w-full text-black
+  }
+
+  .dark-input{
+    @apply form-input bg-gray-600 text-white
   }
 
   .form-submit{

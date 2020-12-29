@@ -15,7 +15,7 @@ export default function Login() {
     if(isRendered){
     try {
       const loginUser = data;
-      const loginRes = await Axios.post(
+      await Axios.post(
         "/api/v1/users/login",
         loginUser
       ).then( (loginRes) => {
@@ -50,9 +50,9 @@ export default function Login() {
       <p className='font-light text-2xl my-10 text-white' >Welcome back.</p>
       
       <form  className='form self-align-center' onSubmit={handleSubmit(onSubmit)}>
-        <input className='form-input' type="email" placeholder="E-mail" name="email" ref={register({required: 'This field is required'})} />
+        <input className='dark-input' type="email" placeholder="E-mail" name="email" ref={register({required: 'This field is required'})} />
         <ErrorNotice name='email' errors={errors}/>
-        <input className='form-input' type="password" placeholder="Password" name="password" ref={register({required: 'This field is required', minLength: {
+        <input className='dark-input' type="password" placeholder="Password" name="password" ref={register({required: 'This field is required', minLength: {
             value: 5,
             message: "Must exceed 5 characters"
           }})} />
