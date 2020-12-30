@@ -2,7 +2,7 @@ import React, { useContext, useState} from 'react'
 import { GlobalContext } from '../context/GlobalState';
 import { useForm, Controller } from 'react-hook-form';
 import Select from 'react-select'
-import {backupEnums} from '../utils/backupEnums';
+import backupEnums from '../utils/backupEnums';
 import { dot, dotBefore } from '../utils/format';
 import moment from 'moment'
 import chroma from 'chroma-js'
@@ -33,9 +33,9 @@ const colourStyles = {
         ? '#ccc'
         : isSelected
           ? getContrast(color, 'white')
-          : chroma.contrast(color, currGray) > 3
+          : chroma.contrast(color, currGray) > 4.5
             ? data.color
-            : color.brighten(0.5).css(),
+            : color.brighten(0.6).css(),
       cursor: isDisabled ? 'not-allowed' : 'default',
 
       ':active': {
@@ -51,9 +51,9 @@ const colourStyles = {
     return ({
       ...styles, 
       maxWidth:'100%',
-      color: chroma.contrast(color, currGray) > 3
-             ? color
-             : color.brighten(0.5).css(),
+      color: chroma.contrast(color, currGray) > 4.5
+              ? data.color
+              : color.brighten(0.6).css(),
       "font-style":'italic'
    })
   }
@@ -97,6 +97,7 @@ export const AddTransaction = () => {
     return (enums.sources.filter(obj=>{return obj.name === source })[0].currency.code)
   }
   
+
  
   return (
     <form className= 'form ' onSubmit={handleSubmit(onSubmit)}>
