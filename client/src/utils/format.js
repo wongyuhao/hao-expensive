@@ -32,15 +32,18 @@ export function toTitleCase(str) {
 });
 
 export const getSymbol = (currency, enums) => {
-  return (enums.currencies.find(obj=>{return obj.code === currency }).symbol) || ""
+  let obj = enums.currencies.find(obj=>{return obj.code === currency })
+  return (obj && obj.symbol) ? obj.symbol : "$"
 }
 
 export const getCategoryColor = (category, enums) => {
-  return (enums.categories.find(obj => {return obj.name === category}).color) || ""
+  let obj = enums.categories.find(obj => {return obj.name === category})
+  return (obj && obj.color) ? obj.color : '#ccc'
 }
 
 export const getSourceColor = (source, enums)=> {
-  return enums.sources.find(obj => obj.name ===source).color
+  let obj = enums.sources.find(obj => obj.name ===source)
+  return (obj && obj.color) ? obj.color : "#ccc"
 }
 
 export const dot = (color = '#ccc') => {

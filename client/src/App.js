@@ -6,19 +6,25 @@ import Header from './components/Header'
 import {  GlobalContext } from './context/GlobalState';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import Axios from 'axios';
-
+import backupEnums from './utils/backupEnums'
 // eslint-disable-next-line
 export default () => {
-  const {setUserData, setEnums} = useContext(GlobalContext);
- 
+  const {enums, setUserData, setEnums} = useContext(GlobalContext);
+  
 
-  const getEnums = async() => {
+  const getEnums = async(test = true) => {
     try {
-      const enumRes = await Axios.get('/api/v1/enums');
-      if(enumRes){
-        const {data} = enumRes;
-        setEnums(data);
+      if(!test){
+        const enumRes = await Axios.get('/api/v1/enums');
+        if(enumRes){
+          const {data} = enumRes;
+          setEnums(data)
+        }
+      }else{
+        alert('test mode enabled')
+        setEnums(backupEnums);
       }
+      
     } catch (err) {
       throw err;
     }
@@ -56,7 +62,8 @@ export default () => {
     
     try {
       checkLogin();
-      getEnums();
+      getEnums(true);
+      
       
     } catch (err) {
       console.error(err.message);

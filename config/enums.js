@@ -69,7 +69,7 @@ const categories = [
   },
   {
     name: 'Misc',
-    color: '#000'
+    color: '#fff'
   }
 ]
 

@@ -3,7 +3,7 @@ import { GlobalContext } from '../context/GlobalState';
 import { useForm, Controller } from 'react-hook-form';
 import Select from 'react-select'
 import backupEnums from '../utils/backupEnums';
-import { dot, dotBefore } from '../utils/format';
+import { dot, dotBefore, getSymbol } from '../utils/format';
 import moment from 'moment'
 import chroma from 'chroma-js'
 
@@ -117,7 +117,7 @@ export const AddTransaction = () => {
               "value" : obj.name.toUpperCase(),
               "label": obj.name.toUpperCase(),
               "color" : obj.color || "#000",
-              "symbol" : obj.currency.symbol
+              "symbol" : getSymbol(obj.currency, enums)
             })
           )
         }

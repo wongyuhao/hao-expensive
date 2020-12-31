@@ -10,7 +10,7 @@ const initialState = {
   enums: undefined,
   enumMap: undefined,
   pathname: "/login",
-  
+  testMode: false,
 }
 
 
@@ -100,11 +100,13 @@ export const GlobalProvider = ({ children }) => {
   }
 
   const setEnums = (data) =>{
-
+    console.log('inside setEnums');
+    console.log(data)
     dispatch({
       type: 'SET_ENUMS',
       payload: data
     })
+    
   }
 
   return (<GlobalContext.Provider value={{
@@ -121,7 +123,8 @@ export const GlobalProvider = ({ children }) => {
     setEnums, 
     enums: state.enums,
     pathname: state.pathname,
-    setPathname
+    setPathname,
+    testMode: state.testMode
    
   }}>
     {children}
