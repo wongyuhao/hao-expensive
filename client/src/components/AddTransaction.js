@@ -2,64 +2,12 @@ import React, { useContext, useState} from 'react'
 import { GlobalContext } from '../context/GlobalState';
 import { useForm, Controller } from 'react-hook-form';
 import Select from 'react-select'
-import { dotBefore, getSymbol } from '../utils/format';
+import { getSymbol } from '../utils/format';
 import moment from 'moment'
-import chroma from 'chroma-js'
-
-const currGray = 'rgb(82,82,82)'
-const getContrast = (color, compared) => (
-  chroma.contrast(color, compared) > 2
-          ? 'white'
-          : 'black'
-  )
+import {colourStyles} from '../utils/styling'
 
 
-const colourStyles = {
-  control: styles => ({ ...styles, backgroundColor: currGray, border:'none', width: "100%", }),
-  option: (styles, { data, isDisabled, isFocused, isSelected }) => {
-    const color = chroma(data.color);
-    return {
-      ...styles,
-      ...dotBefore(isSelected? getContrast(color, 'white') : data.color),
-      backgroundColor: isDisabled
-        ? null
-        : isSelected
-          ? data.color
-          : isFocused
-            ? color.alpha(0.1).css()
-            : currGray,
-      color: isDisabled
-        ? '#ccc'
-        : isSelected
-          ? getContrast(color, 'white')
-          : chroma.contrast(color, currGray) > 4.5
-            ? data.color
-            : color.brighten(0.6).css(),
-      cursor: isDisabled ? 'not-allowed' : 'default',
 
-      ':active': {
-        ...styles[':active'],
-        backgroundColor: !isDisabled && (isSelected ? data.color : color.alpha(0.3).css()),
-      },
-    };
-  },
-  menu: provided => ({ ...provided,backgroundColor:'rgb(82,82,82)', zIndex: "9999 !important" }),
-  placeholder: styles => ({ ...styles }),
-  singleValue: (styles, { data }) => {
-    const color = chroma(data.color);
-    return ({
-      ...styles, 
-      maxWidth:'100%',
-      color: chroma.contrast(color, currGray) > 4.5
-              ? data.color
-              : color.brighten(0.6).css(),
-      "font-style":'italic'
-   })
-  }
-  
-  
-  
-};
 
 
 export const AddTransaction = () => {
@@ -73,8 +21,8 @@ export const AddTransaction = () => {
     }else{
       return(moment().utc().toDate())
     }
- 
   }
+
   const onSubmit = (data) => {
     const {text, amount, date, source, category, remarks} = data
     
@@ -98,7 +46,7 @@ export const AddTransaction = () => {
 
  
   return (enums)?(
-    <form className= 'form ' onSubmit={handleSubmit(onSubmit)}>
+    <form className= 'form' onSubmit={handleSubmit(onSubmit)}>
       <input className= 'dark-input' type="text" placeholder="Title" name="text" ref={register({required: true})} />
       <input className= 'dark-input' step='.01' type="number" placeholder="Amount" name="amount" ref={register} />
       <hr className='mt-2 mb-4'/> 

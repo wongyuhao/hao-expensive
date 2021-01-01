@@ -14,7 +14,7 @@ export default () => {
     )
   }else{
     return (
-     <div className="flex flex-col lg:flex-row  justify-around p-5 lg:p-12 lg:px-8 lg:pb-0 w-full ">
+     <div className="flex flex-col lg:flex-row  justify-around p-0 md:p-12 md:px-8 md:pb-0 w-full ">
         <div className='flex-col w-full'>
           {/* <Stats/> */}
           <TransactionList />

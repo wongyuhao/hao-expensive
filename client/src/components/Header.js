@@ -29,7 +29,7 @@ export default () => {
  const RegisterButton = <button onClick={register} className='btn'>Register</button>
  const LoginButton = <button onClick={login} className='btn'>Log in</button>
    if(user){
-     profile = <div className='rounded bg-white bg-opacity-25 mx-2.5 px-2 mt-1'>
+     profile = <div className='rounded bg-white bg-opacity-25 mx-2.5 px-2 mt-1 text-md'>
                   🙋‍♂️ <em>{user.username}</em>
                 </div>
      AuthOption = <button onClick={logout} className='btn text-yellow-400'>Log out</button>
@@ -42,7 +42,8 @@ export default () => {
  return(
    <nav className='fixed py-2.5 px-4 flex flex-row justify-between align-center top bg-gray-900 text-white w-screen z-50'>
      <div className='self-center flex flex-row'>
-      <p className='font-bold text-xl'>💸 Hao Expensive</p>
+      <p className='font-bold  text-xl'>💸</p>
+      <p className='font-bold  hidden lg:visible text-xl'> Hao Expensive</p>
       {profile}
      </div>
      <div>

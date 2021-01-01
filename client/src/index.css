@@ -19,7 +19,7 @@
   }
 
   .form{
-   @apply flex flex-col bg-gray-800 p-4 rounded-md 
+   @apply flex flex-col bg-gray-900 p-4 rounded-md 
   }
 
 
@@ -28,7 +28,7 @@
   }
 
   .dark-input{
-    @apply form-input bg-gray-600 text-white
+    @apply form-input bg-gray-800 text-white
   }
 
   .form-submit{

@@ -1,12 +1,12 @@
 import React, { useContext, useEffect} from 'react';
 import { Transaction } from './Transaction';  
-import ReactPaginate from 'react-paginate';
+import FilterSelect from './FilterSelect'
 import { GlobalContext } from '../context/GlobalState';
 import moment from 'moment'
 
 
 export const TransactionList = () => {
-  const { transactions, getTransactions, user} = useContext(GlobalContext);
+  const { transactions, getTransactions, user, enums} = useContext(GlobalContext);
   
   useEffect(()=>{
     if(user === undefined) return;
@@ -15,11 +15,35 @@ export const TransactionList = () => {
   }, [user]);
   
   
-  return (
+  return (enums)? (
     <div className='bg-gray-900 px-2.5 py-3.5 min-h-full rounded-lg lg:mr-3  overflow-y-scroll' style={{maxHeight:'80vh'}}>
-      <div className='flex flex-row justify-between p-3'>
+      <div className='flex flex-col lg:flex-row lg:justify-between p-3'>
         <h1 className='text-4xl  font-bold'>History</h1>
-        <button>Filter</button>
+        <FilterSelect
+          options = {[
+            {
+              label: 'Categories',
+              options: enums.categories.map(obj =>
+                ({
+                  "value" : obj.name,
+                  "label":obj.name,
+                  "color" : obj.color || "#000"
+                })
+              )
+            },
+            {
+              label: 'Sources',
+              options: enums.sources.map(obj =>
+                ({
+                  "value" : obj.name.toUpperCase(),
+                  "label": obj.name.toUpperCase(),
+                  "color" : obj.color || "#000"
+                })
+              )
+            }
+          ]}
+        />
+
       </div>
     
     
@@ -49,7 +73,7 @@ export const TransactionList = () => {
     }</div>
 
     
-  )
+  ) :<></>
 
 }
 
