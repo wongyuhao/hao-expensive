@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import { GlobalContext } from '../context/GlobalState';
 import { numberWithCommas, getSymbol, getCategoryColor, getSourceColor, dot } from '../utils/format';
-import moment from 'moment'
+
 export const Transaction = ({ transaction }) => {
   const { deleteTransaction, enums } = useContext(GlobalContext);
   const [buttonClass, setButtonClass] = useState("hidden");

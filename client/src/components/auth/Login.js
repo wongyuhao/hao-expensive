@@ -8,25 +8,29 @@ import ErrorNotice from "../misc/ErrorNotice";
 export default function Login() {
   const { register, handleSubmit, errors } = useForm();
   const [error, setError] = useState();
-  const { user, setUserData } = useContext(GlobalContext);
+  const { user, setUserData, setEnums } = useContext(GlobalContext);
   const history = useHistory();
   let isRendered = true
   const onSubmit = async (data) => {
     if(isRendered){
     try {
       const loginUser = data;
-      await Axios.post(
+      const loginRes = await Axios.post(
         "/api/v1/users/login",
         loginUser
-      ).then( (loginRes) => {
-        setUserData({
-          token: loginRes.data.token,
-          user: loginRes.data.user,
-        });
-        localStorage.setItem("auth-token", loginRes.data.token);
-        history.push("/");
-      }).then(isRendered= false)
-      .catch((err)=> {throw err});
+      ).catch((err)=> {throw err});
+
+      setUserData({
+        token: loginRes.data.token,
+        user: loginRes.data.user,
+      });
+      const enumRes = await Axios.post('/api/v1/enums',{
+        'username' : loginRes.data.user.username
+      })
+      setEnums(enumRes.data)
+      localStorage.setItem("auth-token", loginRes.data.token);
+      history.push("/");
+      isRendered= false
       
     } catch (err) {
       err.response.data.error && setError(err.response.data.error);

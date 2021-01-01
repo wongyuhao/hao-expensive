@@ -2,8 +2,7 @@ import React, { useContext, useState} from 'react'
 import { GlobalContext } from '../context/GlobalState';
 import { useForm, Controller } from 'react-hook-form';
 import Select from 'react-select'
-import backupEnums from '../utils/backupEnums';
-import { dot, dotBefore, getSymbol } from '../utils/format';
+import { dotBefore, getSymbol } from '../utils/format';
 import moment from 'moment'
 import chroma from 'chroma-js'
 
@@ -67,7 +66,6 @@ export const AddTransaction = () => {
 
   const { addTransaction, enums} = useContext(GlobalContext);
   const { control, register, handleSubmit } = useForm();
-  const options = (enums !== undefined) ? enums : backupEnums;
 
   const dateGenerator  = (date) => {
     if(moment(date).isValid()){
@@ -99,7 +97,7 @@ export const AddTransaction = () => {
   
 
  
-  return (
+  return (enums)?(
     <form className= 'form ' onSubmit={handleSubmit(onSubmit)}>
       <input className= 'dark-input' type="text" placeholder="Title" name="text" ref={register({required: true})} />
       <input className= 'dark-input' step='.01' type="number" placeholder="Amount" name="amount" ref={register} />
@@ -112,7 +110,7 @@ export const AddTransaction = () => {
         styles={colourStyles}
         menuPortalTarget={document.querySelector('body')}
         options={
-          options.sources.map(obj =>
+          enums.sources.map(obj =>
             ({
               "value" : obj.name.toUpperCase(),
               "label": obj.name.toUpperCase(),
@@ -134,7 +132,7 @@ export const AddTransaction = () => {
         styles={colourStyles}
         menuPortalTarget={document.querySelector('body')}
         options={
-          options.categories.map(obj =>
+          enums.categories.map(obj =>
             ({
               "value" : obj.name,
               "label":obj.name,
@@ -156,5 +154,5 @@ export const AddTransaction = () => {
       <input className='form-submit' type="submit" value='Add'/>
     </form>
 
-  )
+  ) : <>loading...</> 
 }

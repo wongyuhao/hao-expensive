@@ -8,7 +8,7 @@ import ErrorNotice from "../misc/ErrorNotice";
 export default function Register() {
   const { register, handleSubmit, errors, watch } = useForm();
   const [error, setError] = useState();
-  const { user, setUserData } = useContext(GlobalContext);
+  const { user, setUserData, setEnums } = useContext(GlobalContext);
   const history = useHistory();
   let isRendered = true;
   const password = useRef({});
@@ -19,17 +19,21 @@ export default function Register() {
    if(isRendered){
     try {
       await Axios.post("/api/v1/users/register", data);
-      await Axios.post("/api/v1/users/login", {
+      const loginRes = await Axios.post("/api/v1/users/login", {
         email: data.email,
         password: data.password,
-      }).then((loginRes)=>{
-        setUserData({
-          token: loginRes.data.token,
-          user: loginRes.data.user,
-        });
-        localStorage.setItem("auth-token", loginRes.data.token);
-        history.push("/");
       }).catch((err)=> {throw err});
+
+      setUserData({
+        token: loginRes.data.token,
+        user: loginRes.data.user,
+      });
+      const enumRes = await Axios.post('/api/v1/enums',{
+        'username' : loginRes.data.user.username
+      })
+      setEnums(enumRes.data)
+      localStorage.setItem("auth-token", loginRes.data.token);
+      history.push("/");
 
     } catch (err) {
       err.response.data.error && setError(err.response.data.error);

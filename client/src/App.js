@@ -6,29 +6,9 @@ import Header from './components/Header'
 import {  GlobalContext } from './context/GlobalState';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import Axios from 'axios';
-import backupEnums from './utils/backupEnums'
 // eslint-disable-next-line
 export default () => {
-  const {enums, setUserData, setEnums} = useContext(GlobalContext);
-  
-
-  const getEnums = async(test = true) => {
-    try {
-      if(!test){
-        const enumRes = await Axios.get('/api/v1/enums');
-        if(enumRes){
-          const {data} = enumRes;
-          setEnums(data)
-        }
-      }else{
-        alert('test mode enabled')
-        setEnums(backupEnums);
-      }
-      
-    } catch (err) {
-      throw err;
-    }
-  }
+  const { setUserData, setEnums} = useContext(GlobalContext);
 
   const checkLogin = async () => {  
     let token = localStorage.getItem('auth-token');
@@ -47,23 +27,23 @@ export default () => {
         headers: {"x-auth-token": token}
       }).catch(error => {
        throw error
-      });
-  
+      })
+
+      const enumRes = await Axios.post('/api/v1/enums',{
+          'username' : userRes.data.username
+      })
+      setEnums(enumRes.data)
+
       setUserData({
         token,
         user: userRes.data
       })
     }
-
-
-
   }
   useEffect(()=>{
     
     try {
       checkLogin();
-      getEnums(true);
-      
       
     } catch (err) {
       console.error(err.message);

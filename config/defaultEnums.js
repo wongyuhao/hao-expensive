@@ -1,7 +1,6 @@
 
 
 const currencies = [
-
   {
     code: "USD",
     symbol: "$"
@@ -11,18 +10,17 @@ const currencies = [
 const sources = [
   {
     name: "Bank of America",
-    currency: currencies[1],
+    currency: currencies[0],
     color: '#0065B3'
   },
   {
     name: "OTHER",
-    currency: currencies[1],
+    currency: currencies[0],
     color: '#ccc'
   }
 ]
 
 const categories = [
-
   {
     name: 'Tech',
     color: '#3498db'
@@ -57,10 +55,9 @@ const categories = [
   }
 ]
 
-const enums = {
+exports.defaultEnums = {
   currencies: currencies,
   sources : sources,
   categories: categories
   
 }
-export default enums;
