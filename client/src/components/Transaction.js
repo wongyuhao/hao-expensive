@@ -50,9 +50,9 @@ export const Transaction = ({ transaction }) => {
             onClick={()=>toggleButtonVisibility()}
           />
           <div 
-            className={`font-semibold ${transaction.remarks ? 'cursor-pointer':""}`} 
+            className={`font-semibold flex flex-row ${transaction.remarks ? 'cursor-pointer':""}`} 
             onClick={()=>toggleRemarksVisiblity()} >
-              {transaction.text} {(transaction.remarks)? "..":""}
+              {transaction.text} <p className='pl-2 text-gray-500'>{(transaction.remarks && remarksClass ==='hidden')? "...":""}</p>
           </div> 
         </div>
         
