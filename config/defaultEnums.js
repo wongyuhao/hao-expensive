@@ -9,7 +9,7 @@ const currencies = [
 
 const sources = [
   {
-    name: "Bank of America",
+    name: "BANK OF AMERICA",
     currency: currencies[0],
     color: '#0065B3'
   },

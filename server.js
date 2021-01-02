@@ -6,6 +6,7 @@ const transactions = require('./routes/transactions.js');
 const users = require('./routes/users.js');
 const {enums} = require('./config/enums')
 const {defaultEnums} = require('./config/defaultEnums')
+const {personalEnums} = require('./config/personalEnums')
 dotenv.config({path: './config/config.env'});
 
 connectDB();
@@ -20,7 +21,7 @@ app.post('/api/v1/enums', (req, res) => {
   try {
     (req.body.username ==='bye@gmail.com') 
     ?
-     res.json(enums)
+     res.json(personalEnums)
     :
     res.json(defaultEnums)
   } catch (error) {
