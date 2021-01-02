@@ -60,7 +60,6 @@ return({
   content: '" "',
   height: '0.7rem',
   width: '0.7rem',
-  zIndex:2,
   marginTop:'0.1rem',
   marginRight: '1rem'
 });}

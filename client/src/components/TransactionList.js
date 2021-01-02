@@ -18,7 +18,7 @@ export default () => {
         (<strong>You are not logged in.</strong>)
         :
         (transactions.length === 0 ) ?
-          (<div className='w-full text-gray-500 '>No Transactions.</div>)
+            (<div className='w-full text-center px-5 py-10 text-gray-500 '>No Transactions.</div>)
           :
           (<>
             <ul className="list">

@@ -1,8 +1,9 @@
 import React, {useContext} from 'react';
 import {Redirect} from 'react-router-dom';
 import InfoPanel from '../components/InfoPanel'
-import { AddTransaction } from '../components/AddTransaction';
+import AddTransaction from '../components/AddTransaction';
 import { GlobalContext } from '../context/GlobalState';
+import ModalAddTransaction from '../components/ModalAddTransaction';
   // eslint-disable-next-line
 export default () => {
   const {user} = useContext(GlobalContext);
@@ -18,8 +19,11 @@ export default () => {
           {/* <Stats/> */}
           <InfoPanel/>
         </div>
-        <div className='h-full  lg:w-1/4 max-w-sm'>
-          <AddTransaction />
+        <div className='h-full lg:w-1/4 max-w-sm hidden lg:flex'>
+            <AddTransaction />
+        </div>
+        <div className='flex lg:hidden fixed top-0'>
+            <ModalAddTransaction/>
         </div>
       </div>
     )

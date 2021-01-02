@@ -10,7 +10,7 @@ import {colourStyles} from '../utils/styling'
 
 
 
-export const AddTransaction = () => {
+ export default (props) => {
 
   const { addTransaction, enums} = useContext(GlobalContext);
   const { control, register, handleSubmit } = useForm();
@@ -37,16 +37,21 @@ export const AddTransaction = () => {
     }
 
     addTransaction(transaction);
+    props.toggleModalOpen();
   };
 
   const getCurrency = (source) => {
-    return (enums.sources.filter(obj=>{return obj.name === source })[0].currency.code)
+    let obj = enums.sources.find(obj=>{return obj.name === source })
+    return (obj && obj.currency) ? obj.currency.code : 'USD'
   }
   
 
  
   return (enums)?(
-    <form className= 'form' onSubmit={handleSubmit(onSubmit)}>
+    <form className= 'form' 
+      onSubmit={
+        handleSubmit(onSubmit)
+      }>
       <input className= 'dark-input' type="text" placeholder="Title" name="text" ref={register({required: true})} />
       <input className= 'dark-input' step='.01' type="number" placeholder="Amount" name="amount" ref={register} />
       <hr className='mt-2 mb-4'/> 
@@ -104,3 +109,5 @@ export const AddTransaction = () => {
 
   ) : <>loading...</> 
 }
+
+

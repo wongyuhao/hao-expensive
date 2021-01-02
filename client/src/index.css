@@ -22,7 +22,6 @@
    @apply flex flex-col bg-gray-900 p-4 rounded-md 
   }
 
-
   .form-input{
     @apply p-2.5 rounded mb-2 w-full text-black
   }
@@ -38,6 +37,22 @@
   .err{
     @apply text-red-600 px-1.5
   }
+
+  .modalBtn{
+    @apply bg-yellow-500 m-5 md:m-8 flex items-center justify-center rounded-full  cursor-pointer;
+    min-width: 3rem;
+    min-height: 3rem;
+
+  }
+}
+
+.rotateIn{
+  transform: rotate(45deg);
+  transition: transform 150ms linear;
+}
+.rotateOut{
+  transform: rotate(0);
+  transition: transform 150ms linear;
 }
 
 input[type=number]::-webkit-inner-spin-button, 
