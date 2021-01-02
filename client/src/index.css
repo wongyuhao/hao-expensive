@@ -52,7 +52,7 @@
 }
 @screen lg {
   .infoPanel{
-    @apply bg-blue-900 px-2.5 rounded-lg lg:mr-3 pb-20 lg:pb-5 overflow-y-scroll;
+    @apply bg-gray-900 px-2.5 rounded-lg lg:mr-3 pb-20 lg:pb-5 overflow-y-scroll;
     max-height: 80vh;
   }
 }
