@@ -19,6 +19,7 @@ export default (props) => (
     isMulti
     components={animatedComponents}
     className='w-full pt-3 lg:pt-1 lg:ml-10'
+    placeholder={"Filter..."}
     styles={multiColorStyles}
     options={props.options}
     formatGroupLabel={formatGroupLabel}

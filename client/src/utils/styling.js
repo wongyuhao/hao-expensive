@@ -82,9 +82,9 @@ const groupStyles = {
   justifyContent: 'space-between',
 };
 const groupBadgeStyles = {
-  backgroundColor: '#EBECF0',
+  backgroundColor: 'rgb(82,82,82)',
   borderRadius: '2em',
-  color: '#172B4D',
+  color: '#fff',
   display: 'inline-block',
   fontSize: 12,
   fontWeight: 'normal',
