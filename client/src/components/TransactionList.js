@@ -21,10 +21,10 @@ export default () => {
             (<div className='w-full text-center px-5 py-10 text-gray-500 '>No Transactions.</div>)
           :
           (<>
-            <ul className="list">
+            <ul className="h-full">
               {transactions
               //.filter(transaction=>moment(transaction.createdAt).isSameOrAfter(Date.now(), 'month'))
-              .map(transaction => (<Transaction key={transaction._id} className='tli' transaction={transaction} />))}
+              .map(transaction => (<Transaction key={transaction._id} transaction={transaction} />))}
             </ul>
             {/* <ReactPaginate
               previousLabel={'previous'}

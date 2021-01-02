@@ -6,7 +6,7 @@ export default () => {
 
 
   return(
-    <div className='bg-gray-900 px-2.5 py-3.5 min-h-full rounded-lg lg:mr-3  overflow-y-scroll' style={{maxHeight:'80vh'}}>
+    <div className='bg-gray-900 px-2.5 rounded-lg lg:mr-3 pb-20 lg:pb-5 max-h-full overflow-y-scroll infoPanel'>
       <InfoPanelHeader/>
       <TransactionList/>
     </div>

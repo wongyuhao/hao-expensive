@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 @layer base{
-  
+  html{
+    @apply h-screen;
+  }
   body{
     @apply bg-black text-white;
   }
@@ -40,12 +42,20 @@
 
   .modalBtn{
     @apply bg-yellow-500 m-5 md:m-8 flex items-center justify-center rounded-full  cursor-pointer;
-    min-width: 3rem;
-    min-height: 3rem;
-
+    minWidth: 3rem;
+    minHeight: 3rem;
+  }
+  .infoPanel{
+    @apply bg-gray-900 px-2.5 rounded-lg lg:mr-3 pb-20 lg:pb-5 overflow-y-scroll;
+  }
+  
+}
+@screen lg {
+  .infoPanel{
+    @apply bg-blue-900 px-2.5 rounded-lg lg:mr-3 pb-20 lg:pb-5 overflow-y-scroll;
+    max-height: 80vh;
   }
 }
-
 .rotateIn{
   transform: rotate(45deg);
   transition: transform 150ms linear;

@@ -54,7 +54,7 @@ export default () => {
     <div className='flex flex-col'>
       <BrowserRouter>
       <Header  />
-      <div className='pt-10'>
+      <div className='pt-10 h-full'>
       <Switch >
         <Route exact path="/" component ={Home}/>
         <Route exact path="/login" component ={Login}/>
