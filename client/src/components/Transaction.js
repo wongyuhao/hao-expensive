@@ -41,7 +41,7 @@ export const Transaction = ({ transaction }) => {
         ✕
     </button> 
     <li className='p-2 flex flex-col flex-nowrap w-full bg-gray-800 border-gray-700 shadow-sm rounded '>
-      <div className= 'flex flex-row justify-between w-full' style={{borderRight:`3px solid ${getSourceColor(transaction.source, enums)}`}}>
+      <div className= 'flex flex-col md:flex-row justify-between w-full' style={{borderRight:`3px solid ${getSourceColor(transaction.source, enums)}`}}>
 
         <div className='flex flex-row items-center'>
           <div 
@@ -50,19 +50,20 @@ export const Transaction = ({ transaction }) => {
             onClick={()=>toggleButtonVisibility()}
           />
           <div 
-            className={`font-semibold flex flex-row ${transaction.remarks ? 'cursor-pointer':""}`} 
+            className={`font-semibold flex flex-row items-center overflow-ellipsis ${transaction.remarks ? 'cursor-pointer':""}`} 
             onClick={()=>toggleRemarksVisiblity()} >
-              {transaction.text} <p className='pl-2 text-gray-500'>{(transaction.remarks && remarksClass ==='hidden')? "...":""}</p>
+              <p>{transaction.text}</p>
+              <p className='px-2 text-gray-500'>{(transaction.remarks && remarksClass ==='hidden')? "...":""}</p>
           </div> 
         </div>
         
         <div className=' lg:w-2/5  flex flex-row justify-self-end pr-5'>
 
          
-            <div className={`text-green-400 text-right  w-1/2 whitespace-nowrap  ${income ===0 ? "hidden lg:block lg:invisible":""}`}>
+            <div className={`text-green-400 text-right  lg:w-1/2 whitespace-nowrap  ${income ===0 ? "hidden lg:block lg:invisible":""}`}>
               {getSymbol(transaction.currency, enums)+ ' '}{numberWithCommas(Math.abs(income))}
             </div>
-            <div className={`text-red-500  text-right  w-1/2 whitespace-nowrap ${expense ===0 ? "hidden lg:block lg:invisible":""}`}>
+            <div className={`text-red-500  text-right  Lg:w-1/2 whitespace-nowrap ${expense ===0 ? "hidden lg:block lg:invisible":""}`}>
               {getSymbol(transaction.currency, enums)+' '}{numberWithCommas(Math.abs(expense))}
             </div>
      
