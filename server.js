@@ -17,14 +17,15 @@ app.use(express.json());
 app.use('/api/v1/users', users);
 app.use('/api/v1/transactions', transactions);
 app.post('/api/v1/enums', (req, res) => {
-  
-  res.json(
+  try {
     (req.body.username ==='bye@gmail.com') 
     ?
-    res.json({...enums})
+     res.json(enums)
     :
-    res.json({...defaultEnums})
-  )
+    res.json(defaultEnums)
+  } catch (error) {
+    console.error(error.message)
+  }
 })
 
 

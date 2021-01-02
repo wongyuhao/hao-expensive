@@ -56,8 +56,8 @@ const categories = [
 ]
 
 exports.defaultEnums = {
-  currencies: currencies,
-  sources : sources,
-  categories: categories
+  currencies: this.currencies,
+  sources : this.sources,
+  categories: this.categories
   
 }
