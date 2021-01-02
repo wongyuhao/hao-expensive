@@ -4,7 +4,7 @@ import {GlobalContext} from '../context/GlobalState'
 export default () => {
   const {enums} = useContext(GlobalContext)
 
-  return (
+  return (enums) ? (
     <div className='flex flex-col lg:flex-row lg:justify-between p-3'>
         <h1 className='text-4xl  font-bold'>History</h1>
         <FilterSelect
@@ -36,4 +36,8 @@ export default () => {
     
     
   )
+
+  :
+
+  <></>
 }

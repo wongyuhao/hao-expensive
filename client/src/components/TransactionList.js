@@ -13,12 +13,12 @@ export default () => {
   }, [user]);
   
   
-  return (enums) ? 
+  return (
     (user === undefined) ? 
         (<strong>You are not logged in.</strong>)
         :
         (transactions.length === 0 ) ?
-          (<div>No Transactions.</div>)
+          (<div className='w-full text-gray-500 '>No Transactions.</div>)
           :
           (<>
             <ul className="list">
@@ -40,7 +40,7 @@ export default () => {
             /> */}
             </>
           )
-    :<></>
+  )
 
 }
 
