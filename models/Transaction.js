@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const {enums} = require('../config/enums');
+const {personalEnums} = require('../config/personalEnums');
 exports.TransactionSchema = new mongoose.Schema({
   text:{
     type: String,
@@ -17,13 +17,13 @@ exports.TransactionSchema = new mongoose.Schema({
   },
   currency:{ 
     type: String, 
-    enum: enums.currencies.map(obj => obj.code),
+    enum: personalEnums.currencies.map(obj => obj.code),
     default: "USD",
     required: true
   }, 
   source:{
     type: String,
-    enum: enums.sources.map(obj => obj.name),
+    enum: personalEnums.sources.map(obj => obj.name),
     required: true,
     default: "OTHER"
   },
@@ -35,7 +35,7 @@ exports.TransactionSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: enums.categories.map(obj => obj.name),
+    enum: personalEnums.categories.map(obj => obj.name),
     required: true,
     default: 'Misc'
   }

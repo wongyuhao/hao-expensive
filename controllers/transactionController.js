@@ -1,6 +1,6 @@
 const {Transaction} = require('../models/Transaction');
 const {User} = require('../models/User');
-const {enums} = require('../config/enums');
+const {personalEnums} = require('../config/personalEnums');
 
 exports.getAllTransactions = async (req, res, next) => {
   try {
