@@ -37,7 +37,7 @@ import {colourStyles} from '../utils/styling'
     }
 
     addTransaction(transaction);
-    props.toggleModalOpen();
+    if(props.toggleModalOpen) props.toggleModalOpen();
   };
 
   const getCurrency = (source) => {
