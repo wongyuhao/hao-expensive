@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import { GlobalContext } from '../context/GlobalState';
 import { numberWithCommas, getSymbol, getCategoryColor, getSourceColor, dot } from '../utils/format';
-
+import moment from 'moment'
 export const Transaction = ({ transaction }) => {
   const { deleteTransaction, enums } = useContext(GlobalContext);
   const [buttonClass, setButtonClass] = useState("hidden");
@@ -41,20 +41,23 @@ export const Transaction = ({ transaction }) => {
         ✕
     </button> 
     <li className='p-2 flex flex-col flex-nowrap w-full bg-gray-800 border-gray-700 shadow-sm rounded '>
-      <div className= 'flex flex-col md:flex-row justify-between w-full' style={{borderRight:`3px solid ${getSourceColor(transaction.source, enums)}`}}>
+      <div className= 'flex flex-col md:flex-row justify-between ' style={{borderRight:`3px solid ${getSourceColor(transaction.source, enums)}`}}>
 
-        <div className='flex flex-row items-center'>
+        <div className='flex flex-row items-center justify-between lg:w-3/5'>
+          <div className='flex flex-row items-center'>
           <div 
             className='cursor-pointer'
             style={dot(getCategoryColor(transaction.category, enums))}  
             onClick={()=>toggleButtonVisibility()}
           />
           <div 
-            className={`font-semibold flex flex-row items-center overflow-ellipsis ${transaction.remarks ? 'cursor-pointer':""}`} 
+            className={`font-semibold flex flex-row items-center justify-between overflow-ellipsis ${transaction.remarks ? 'cursor-pointer':""}`} 
             onClick={()=>toggleRemarksVisiblity()} >
-              <p>{transaction.text}</p>
-              <p className='px-2 text-gray-500'>{(transaction.remarks && remarksClass ==='hidden')? "...":""}</p>
+                <p>{transaction.text}</p>
+                <p className='px-2 text-gray-500'>{(transaction.remarks && remarksClass ==='hidden')? "...":""}</p>
           </div> 
+          </div>
+          <p className='px-2 text-gray-500 text-xs'>{moment(transaction.createdAt).format('D MMM \'YY')}</p>
         </div>
         
         <div className=' lg:w-2/5  flex flex-row justify-self-end pr-5'>
@@ -73,7 +76,7 @@ export const Transaction = ({ transaction }) => {
       
       {
         (transaction.remarks) ?
-        <div className={`ml-6 text-sm text-gray-500 ${remarksClass}`}>{ ">"  + transaction.remarks }</div>
+        <div className={`lg:ml-6 text-sm text-gray-500 ${remarksClass}`}>{ ">"  + transaction.remarks }</div>
         :
         <></>
       }

@@ -60,6 +60,8 @@ return({
   content: '" "',
   height: '0.7rem',
   width: '0.7rem',
+  minHeight: '0.7rem',
+  minWidth: '0.7rem',
   marginTop:'0.1rem',
   marginRight: '1rem'
 });}
