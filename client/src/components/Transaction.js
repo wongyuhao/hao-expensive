@@ -63,7 +63,7 @@ export const Transaction = ({ transaction }) => {
             <div className={`text-green-400 text-right  lg:w-1/2 whitespace-nowrap  ${income ===0 ? "hidden lg:block lg:invisible":""}`}>
               {getSymbol(transaction.currency, enums)+ ' '}{numberWithCommas(Math.abs(income))}
             </div>
-            <div className={`text-red-500  text-right  Lg:w-1/2 whitespace-nowrap ${expense ===0 ? "hidden lg:block lg:invisible":""}`}>
+            <div className={`text-red-500  text-right  lg:w-1/2 whitespace-nowrap ${expense ===0 ? "hidden lg:block lg:invisible":""}`}>
               {getSymbol(transaction.currency, enums)+' '}{numberWithCommas(Math.abs(expense))}
             </div>
      
