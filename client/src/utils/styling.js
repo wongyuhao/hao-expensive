@@ -8,7 +8,7 @@ const getContrast = (color, compared) => (
 )
 
 const colourStyles = {
-  control: styles => ({ ...styles, backgroundColor: currGray, border:'none', width: "100%", }),
+  control: styles => ({ ...styles, backgroundColor: currGray, border:'none', width: "100%" }),
   option: (styles, { data, isDisabled, isFocused, isSelected }) => {
     const color = chroma(data.color);
     return {
@@ -37,6 +37,7 @@ const colourStyles = {
     };
   },
   menu: provided => ({ ...provided,backgroundColor:currGray, zIndex: "9999 !important" }),
+  menuList: styles => ({...styles, zIndex:'9999'}),
   placeholder: styles => ({ ...styles }),
   singleValue: (styles, { data }) => {
     const color = chroma(data.color);

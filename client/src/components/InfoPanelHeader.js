@@ -8,6 +8,7 @@ export default () => {
     <div className='flex flex-col lg:flex-row lg:justify-between p-3'>
         <h1 className='text-4xl  font-bold'>History</h1>
         <FilterSelect
+        className='z-50'
           options = {[
             {
               label: 'Categories',

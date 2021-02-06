@@ -21,7 +21,7 @@ export default () => {
             (<div className='w-full text-center px-5 py-10 text-gray-500 '>No Transactions.</div>)
           :
           (<>
-            <ul className="h-full">
+            <ul className="h-full ">
               {transactions
               //.filter(transaction=>moment(transaction.createdAt).isSameOrAfter(Date.now(), 'month'))
               .map(transaction => (<Transaction key={transaction._id} transaction={transaction} />))}
