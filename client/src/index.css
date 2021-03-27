@@ -47,6 +47,7 @@
   }
   .infoPanel{
     @apply bg-gray-900 px-2.5 rounded-lg lg:mr-3 pb-20 lg:pb-5 overflow-y-scroll;
+    minHeight: 50vh;
   }
   
 }

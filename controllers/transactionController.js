@@ -56,12 +56,29 @@ exports.getFilteredTransactions = async (req, res, next) => {
         error: "User not found"
       })
     }
-    console.log(req.body)
+
+
+
+    const options = {
+      path:'transactions',
+    }
+    const sources = req.body.data.sources
+    const categories = req.body.data.categories
+
+    if(sources && sources.length !== 0) {
+      if(!options.match){
+        options['match'] = {$and:[]}
+      }
+      options.match.$and.push({source:{ $in:req.body.data.sources}});
+    }
+    if(categories && categories.length !== 0) {
+      if(!options.match){
+        options['match'] = {$and:[]}
+      }
+      options.match.$and.push({category:{ $in:req.body.data.categories}});
+    }
     await User.findById(req.params.uid)
-              .populate({
-                path: 'transactions',
-                match:{category:{ $in:req.body.data.categories}},
-              })
+              .populate(options)
               .exec((err, transactions) => {
                 return res.status(200).json({
                   success:true,

@@ -17,10 +17,10 @@ export default () => {
         (<strong>You are not logged in.</strong>)
         :
         (transactions.length===0) ?
-            (<div className='w-full h-72 text-center px-5 py-20 text-gray-500 '>No Transactions.</div>)
+            (<div className='w-full h-72 text-center px-5 py-20 text-gray-500' style={{minHeight:'50vh'}}>No Transactions.</div>)
           :
           (<>
-            <ul className="h-full ">
+            <ul className="h-full " style={{minHeight:'50vh'}}>
               {transactions
               // .filter(transaction=>moment(transaction.createdAt).isSameOrAfter(Date.now(), 'month'))
               .map(transaction => (<Transaction key={transaction._id} transaction={transaction} />))}

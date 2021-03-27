@@ -9,7 +9,7 @@ export default () => {
         <h1 className='text-4xl  font-bold'>History</h1>
         <FilterSelect
         className='z-50'
-          options = {[
+          categories = {[
             {
               label: 'Categories',
               options: enums.categories.map(obj =>
@@ -19,7 +19,9 @@ export default () => {
                   "color" : obj.color || "#000"
                 })
               )
-            },
+            }
+          ]}
+          sources={[
             {
               label: 'Sources',
               options: enums.sources.map(obj =>

@@ -19,28 +19,43 @@ const animatedComponents = makeAnimated();
 
 export default (props) => {
   const {getTransactions} = useContext(GlobalContext)
-  const [selected, setSelected] = useState([]);
-  const handleSelectChange = (args) => {
-    if(args){
-      setSelected(args)
-      getTransactions(args.map(i => i.value))
-    } else{
-      setSelected([])
-      getTransactions();
-    }
-    
+  const [categories, setCategories] = useState([]);
+  const [sources, setSources] = useState([]);
+  const handleCategoryChange = (categories) => {
+    setCategories(categories || [])
+    getTransactions(sources.map(i=>i.value), categories?.map(i=>i.value) || [])
   }
+
+  const handleSourceChange = (sources) => {
+    setSources(sources || [])
+    getTransactions(sources?.map(i=>i.value) || [], categories.map(i=>i.value))
+  }
+
   return (
+    <>
+    <Select
+    isMulti
+    components={animatedComponents}
+    className='w-full pt-3 lg:pt-1 lg:ml-10'
+    placeholder={"Source..."}
+    styles={multiColorStyles}
+    options={props.sources}
+    formatGroupLabel={formatGroupLabel}
+    value={sources}
+    onChange={handleSourceChange}
+  />
   <Select
     isMulti
     components={animatedComponents}
     className='w-full pt-3 lg:pt-1 lg:ml-10'
-    placeholder={"Filter..."}
+    placeholder={"Category..."}
     styles={multiColorStyles}
-    options={props.options}
+    options={props.categories}
     formatGroupLabel={formatGroupLabel}
-    value={selected}
-    onChange={handleSelectChange}
+    value={categories}
+    onChange={handleCategoryChange}
   />
+  
+  </>
 )
 };

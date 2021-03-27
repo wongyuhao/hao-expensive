@@ -28,29 +28,31 @@ export const GlobalProvider = ({ children }) => {
     user: undefined
   })
   // Actions
-  async function getTransactions(args) {
+  async function getTransactions(sources, categories) {
     
     try {
       
       if(userData.user !== undefined){
-        if(!args){
-          const res = await axios.get(`/api/v1/transactions/${userData.user.id}`);
-          dispatch({
-             type: 'GET_TRANSACTIONS',
-             payload: res.data.data.transactions
-          });
-        }else{
-          const res = await axios.post(`/api/v1/transactions/${userData.user.id}/filter`,{
-            data:{
-              categories:args
-            },
-            config
-          });
+        const res = await axios.post(`/api/v1/transactions/filter/${userData.user.id}`,{
+          data:{
+            sources:sources,
+            categories:categories
+          },
+          config
+        });
+        // if(!sources && !categories){
+        //   const res = await axios.get(`/api/v1/transactions/${userData.user.id}`);
+        //   dispatch({
+        //      type: 'GET_TRANSACTIONS',
+        //      payload: res.data.data.transactions
+        //   });
+        // }else{
+ 
           dispatch({
              type: 'GET_TRANSACTIONS',
              payload: res.data.data.transactions
           }); 
-        }
+        
       
       }
       

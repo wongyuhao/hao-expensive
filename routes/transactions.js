@@ -12,7 +12,7 @@ router
   .post(addUserTransaction);
 
 router
-  .route('/:uid/filter')
+  .route('/filter/:uid/')
   .post(getFilteredTransactions);
 router
   .route('/:id')
