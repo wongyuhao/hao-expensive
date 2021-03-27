@@ -1,11 +1,10 @@
 import React, { useContext, useEffect} from 'react';
 import { Transaction } from './Transaction';
 import { GlobalContext } from '../context/GlobalState';
-
+import moment from 'moment'
 
 export default () => {
   const { transactions, getTransactions, user, enums} = useContext(GlobalContext);
-  
   useEffect(()=>{
     if(user === undefined) return;
     getTransactions().catch((err)=>console.log(err));
@@ -17,13 +16,13 @@ export default () => {
     (user === undefined) ? 
         (<strong>You are not logged in.</strong>)
         :
-        (transactions.length === 0 ) ?
-            (<div className='w-full text-center px-5 py-10 text-gray-500 '>No Transactions.</div>)
+        (transactions.length===0) ?
+            (<div className='w-full h-72 text-center px-5 py-20 text-gray-500 '>No Transactions.</div>)
           :
           (<>
             <ul className="h-full ">
               {transactions
-              //.filter(transaction=>moment(transaction.createdAt).isSameOrAfter(Date.now(), 'month'))
+              // .filter(transaction=>moment(transaction.createdAt).isSameOrAfter(Date.now(), 'month'))
               .map(transaction => (<Transaction key={transaction._id} transaction={transaction} />))}
             </ul>
             {/* <ReactPaginate

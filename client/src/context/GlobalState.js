@@ -11,6 +11,11 @@ const initialState = {
   pathname: "/login",
 }
 
+const config = {
+  headers: {
+    'Content-Type': 'application/json'
+  }
+}
 
 // Create context
 export const GlobalContext = createContext(initialState);
@@ -23,15 +28,30 @@ export const GlobalProvider = ({ children }) => {
     user: undefined
   })
   // Actions
-  async function getTransactions() {
+  async function getTransactions(args) {
     
     try {
+      
       if(userData.user !== undefined){
-        const res = await axios.get(`/api/v1/transactions/${userData.user.id}`);
-       dispatch({
-          type: 'GET_TRANSACTIONS',
-          payload: res.data.data.transactions
-       });
+        if(!args){
+          const res = await axios.get(`/api/v1/transactions/${userData.user.id}`);
+          dispatch({
+             type: 'GET_TRANSACTIONS',
+             payload: res.data.data.transactions
+          });
+        }else{
+          const res = await axios.post(`/api/v1/transactions/${userData.user.id}/filter`,{
+            data:{
+              categories:args
+            },
+            config
+          });
+          dispatch({
+             type: 'GET_TRANSACTIONS',
+             payload: res.data.data.transactions
+          }); 
+        }
+      
       }
       
     } catch (err) {
@@ -41,7 +61,6 @@ export const GlobalProvider = ({ children }) => {
       });
     }
   }
-
 
 
   async function deleteTransaction(id) {
@@ -62,11 +81,7 @@ export const GlobalProvider = ({ children }) => {
   }
 
   async function addTransaction(transaction) {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
+
     try {
       if(userData.user !== undefined){
        const res = await axios.post(`/api/v1/transactions/${userData.user.id}`, transaction, config);

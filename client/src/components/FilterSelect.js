@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState, useContext} from 'react';
+import {GlobalContext} from '../context/GlobalState'
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import {multiColorStyles, groupBadgeStyles, groupStyles} from '../utils/styling'
@@ -14,7 +15,22 @@ const formatGroupLabel = data => (
 
 const animatedComponents = makeAnimated();
 
-export default (props) => (
+
+
+export default (props) => {
+  const {getTransactions} = useContext(GlobalContext)
+  const [selected, setSelected] = useState([]);
+  const handleSelectChange = (args) => {
+    if(args){
+      setSelected(args)
+      getTransactions(args.map(i => i.value))
+    } else{
+      setSelected([])
+      getTransactions();
+    }
+    
+  }
+  return (
   <Select
     isMulti
     components={animatedComponents}
@@ -23,5 +39,8 @@ export default (props) => (
     styles={multiColorStyles}
     options={props.options}
     formatGroupLabel={formatGroupLabel}
+    value={selected}
+    onChange={handleSelectChange}
   />
-);
+)
+};

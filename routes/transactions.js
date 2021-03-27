@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {getAllTransactions,getUserTransactions, addUserTransaction, deleteTransactions, getAllEnums} = require('../controllers/transactionController')
+const {getAllTransactions,getUserTransactions,getFilteredTransactions, addUserTransaction, deleteTransactions, getAllEnums} = require('../controllers/transactionController')
 
 router
   .route('/')
@@ -11,6 +11,9 @@ router
   .get(getUserTransactions)
   .post(addUserTransaction);
 
+router
+  .route('/:uid/filter')
+  .post(getFilteredTransactions);
 router
   .route('/:id')
   .delete(deleteTransactions);

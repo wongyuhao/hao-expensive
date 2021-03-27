@@ -1,7 +1,6 @@
 const {User} = require('../models/User');
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken');
-const {personalEnums} = require('../config/personalEnums')
 exports.getUsers = async (req, res, next) => {
   try {
     const users = await User.find();

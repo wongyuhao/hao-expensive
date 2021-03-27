@@ -47,6 +47,36 @@ exports.getUserTransactions = async (req, res, next) => {
   }
 }
 
+exports.getFilteredTransactions = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.uid);
+    if(!user){
+      return res.status(404).json({
+        success:false,
+        error: "User not found"
+      })
+    }
+    console.log(req.body)
+    await User.findById(req.params.uid)
+              .populate({
+                path: 'transactions',
+                match:{category:{ $in:req.body.data.categories}},
+              })
+              .exec((err, transactions) => {
+                return res.status(200).json({
+                  success:true,
+                  data: transactions
+                });
+              });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      success:false,
+      error: 'Server '
+    })
+  }
+}
+
 exports.addUserTransaction = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.uid);
