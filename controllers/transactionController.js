@@ -18,9 +18,9 @@ exports.getAllTransactions = async (req, res, next) => {
   }
 }
 
+//depreceated
 exports.getUserTransactions = async (req, res, next) => {
   try {
-
     const user = await User.findById(req.params.uid);
     if(!user){
       return res.status(404).json({
@@ -47,6 +47,7 @@ exports.getUserTransactions = async (req, res, next) => {
   }
 }
 
+
 exports.getFilteredTransactions = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.uid);
@@ -56,14 +57,17 @@ exports.getFilteredTransactions = async (req, res, next) => {
         error: "User not found"
       })
     }
-
-
-
-    const options = {
-      path:'transactions',
-    }
+    
     const sources = req.body.data.sources
     const categories = req.body.data.categories
+    const curr = req.body.data.currpage
+    const per = req.body.data.perpage
+
+    const options = {
+      path:'transactions', 
+    }
+    
+    
 
     if(sources && sources.length !== 0) {
       if(!options.match){
@@ -71,20 +75,42 @@ exports.getFilteredTransactions = async (req, res, next) => {
       }
       options.match.$and.push({source:{ $in:req.body.data.sources}});
     }
+
     if(categories && categories.length !== 0) {
       if(!options.match){
         options['match'] = {$and:[]}
       }
       options.match.$and.push({category:{ $in:req.body.data.categories}});
     }
-    await User.findById(req.params.uid)
-              .populate(options)
-              .exec((err, transactions) => {
-                return res.status(200).json({
-                  success:true,
-                  data: transactions
-                });
-              });
+
+      //transaction count WITH filtering WITHOUT pagination
+      const allTransactions = await User.findById(req.params.uid)
+                            .populate(options)
+      const count = allTransactions.transactions.length
+
+      options['skip'] = curr * per;
+     
+      if(!(per && per === 0)) {
+        options['limit'] = per
+      }
+
+      await User.findById(req.params.uid)
+      .populate(options)
+      .exec((err, val) => {
+        return res.status(200).json({
+          success:true,
+          data: {
+            transactions: val.transactions,
+            _id: val._id,
+            email: val.email,
+            username: val.username,
+            count: count
+          },
+        });
+      });
+    
+
+    
   } catch (err) {
     console.log(err);
     return res.status(500).json({

@@ -46,9 +46,31 @@
     minHeight: 3rem;
   }
   .infoPanel{
-    @apply bg-gray-900 px-2.5 rounded-lg lg:mr-3 pb-20 lg:pb-5 overflow-y-scroll;
+    @apply bg-gray-900 px-2.5 rounded-lg lg:mr-3 pb-20 lg:pb-5;
     minHeight: 50vh;
   }
+
+  .rp-pagination{
+    @apply flex flex-row mx-auto justify-center
+  }
+
+  .rp-cell{
+    @apply  text-white p-3 px-4 mx-1 rounded-md font-bold;
+    background: #262626;
+  }
+
+  .rp-active{
+    background: #f59e0b !important;
+  }
+
+  .rp-pageli{
+    @apply rp-cell font-bold
+  }
+
+  .rp-arrow{
+    @apply rp-cell rounded-md  font-black px-2
+  }
+
   
 }
 @screen lg {

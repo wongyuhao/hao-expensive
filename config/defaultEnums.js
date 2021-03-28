@@ -22,42 +22,66 @@ const sources = [
 
 const categories = [
   {
-    name: 'Tech',
-    color: '#3498db'
+    name: 'Home & Utilities',
+    color: '#6DC24B'
   },
   {
-    name: 'Entertainment',
-    color: '#ff009d'
-  },
-  {
-    name: 'Planned',
-    color: '#626567'
-  },
-  {
-    name: 'Food',
-    color: '#8e44ad'
-  },
-  {
-    name: 'Education',
-    color: '#0000FF'
+    name: 'Transportation',
+    color: '#00AD51'
   },
   {
     name: 'Groceries',
-    color: '#2ecc71'
+    color: '#00924D'
   },
   {
-    name: 'Housing',
-    color: '#c0392b'
+    name: 'Personal & Family Care',
+    color: '#007749'
   },
   {
-    name: 'Misc',
-    color: '#fff'
+    name: 'Health',
+    color: '#164734'
+  },
+  {
+    name: 'Insurance',
+    color: '#004990'
+  },
+  {
+    name: 'Restaurants & Dining',
+    color: '#FFCC00'
+  },
+  {
+    name: 'Shopping & Entertainment',
+    color: '#E7A614'
+  },
+  {
+    name: 'Travel',
+    color: '#EA7600'
+  },
+  {
+    name: 'Cash, Checks & Misc',
+    color: '#B94700'
+  },
+  {
+    name: 'Giving',
+    color: '#AA0061'
+  },
+  {
+    name: 'Business Expenses',
+    color: '#840C56'
+  },
+  {
+    name: 'Education',
+    color: '#673BB7'
+  },
+  {
+    name: 'Finance',
+    color: '#4A116F'
   }
+  
 ]
 
 exports.defaultEnums = {
   currencies: currencies,
   sources : sources,
   categories: categories
-  
 }

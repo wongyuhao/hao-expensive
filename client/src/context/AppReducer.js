@@ -6,7 +6,8 @@ export default (state, action) => {
       return {
         ...state,
         loading: false,
-        transactions: action.payload
+        transactions: action.payload.transactions,
+        totalCount: action.payload.count
       }
     }
       

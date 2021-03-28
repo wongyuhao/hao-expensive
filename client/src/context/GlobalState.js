@@ -5,6 +5,7 @@ import axios from 'axios';
 // Initial state
 const initialState = {
   transactions: [],
+  totalCount: 0,
   error: null,
   loading: true, 
   enums: undefined,
@@ -28,29 +29,23 @@ export const GlobalProvider = ({ children }) => {
     user: undefined
   })
   // Actions
-  async function getTransactions(sources, categories) {
+  async function getTransactions(currpage,perpage,sources, categories) {
     
     try {
       
       if(userData.user !== undefined){
         const res = await axios.post(`/api/v1/transactions/filter/${userData.user.id}`,{
           data:{
+            currpage: currpage,
+            perpage:perpage,
             sources:sources,
-            categories:categories
+            categories:categories,
           },
           config
         });
-        // if(!sources && !categories){
-        //   const res = await axios.get(`/api/v1/transactions/${userData.user.id}`);
-        //   dispatch({
-        //      type: 'GET_TRANSACTIONS',
-        //      payload: res.data.data.transactions
-        //   });
-        // }else{
- 
           dispatch({
              type: 'GET_TRANSACTIONS',
-             payload: res.data.data.transactions
+             payload: res.data.data
           }); 
         
       
@@ -121,6 +116,10 @@ export const GlobalProvider = ({ children }) => {
     
   }
 
+  const setPerpage = (val) =>{
+
+  }
+
 
   return (<GlobalContext.Provider value={{
     transactions: state.transactions,
@@ -137,6 +136,7 @@ export const GlobalProvider = ({ children }) => {
     enums: state.enums,
     pathname: state.pathname,
     setPathname,
+    totalCount: state.totalCount
   }}>
     {children}
   </GlobalContext.Provider>);

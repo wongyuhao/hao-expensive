@@ -1,16 +1,15 @@
-import React, { useContext, useEffect} from 'react';
+import React, { useContext, useEffect, useState} from 'react';
 import { Transaction } from './Transaction';
 import { GlobalContext } from '../context/GlobalState';
-import moment from 'moment'
 
-export default () => {
-  const { transactions, getTransactions, user, enums} = useContext(GlobalContext);
+export default (props) => {
+  const { transactions, user} = useContext(GlobalContext);
+
   useEffect(()=>{
     if(user === undefined) return;
-    getTransactions().catch((err)=>console.log(err));
+    props.handleGetTransactions();
     // eslint-disable-next-line
   }, [user]);
-  
   
   return (
     (user === undefined) ? 
@@ -20,23 +19,10 @@ export default () => {
             (<div className='w-full h-72 text-center px-5 py-20 text-gray-500' style={{minHeight:'50vh'}}>No Transactions.</div>)
           :
           (<>
-            <ul className="h-full " style={{minHeight:'50vh'}}>
+            <ul className="overflow-y-scroll" style={{minHeight:'50vh'}}>
               {transactions
-              // .filter(transaction=>moment(transaction.createdAt).isSameOrAfter(Date.now(), 'month'))
               .map(transaction => (<Transaction key={transaction._id} transaction={transaction} />))}
             </ul>
-            {/* <ReactPaginate
-              previousLabel={'previous'}
-              nextLabel={'next'}
-              breakLabel={'...'}
-              breakClassName={'break-me'}
-              pageCount={3}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={5}
-              containerClassName={'pagination'}
-              subContainerClassName={'pages pagination'}
-              activeClassName={'active'}
-            /> */}
             </>
           )
   )
