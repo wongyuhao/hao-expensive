@@ -14,7 +14,7 @@ export default () => {
     )
   }else{
     return (
-     <div className="flex flex-col lg:flex-row  justify-around p-0 md:p-12 md:px-8 md:pb-0 w-full ">
+     <div className="mx-auto flex flex-col lg:flex-row  justify-center p-0 md:p-12 md:px-8 md:pb-0 w-full  max-w-screen-2xl">
         <div className='flex-col w-full'>
           {/* <Stats/> */}
           <InfoPanel/>
